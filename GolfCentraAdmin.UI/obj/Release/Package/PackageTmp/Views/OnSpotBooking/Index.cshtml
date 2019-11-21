@@ -1,0 +1,491 @@
+﻿@model GolfCentraAdmin.ViewModel.SaveBookingViewModel
+@{ var sessionList = (TempData["SessionList"] as List<@GolfCentraAdmin.ViewModel.SessionMasterViewModel>);}
+@{ var sessionListBDR = (TempData["SessionListBDR"] as List<@GolfCentraAdmin.ViewModel.SessionMasterViewModel>);}
+
+@{ var bucketList = (TempData["BucketList"] as List<@GolfCentraAdmin.ViewModel.BucketViewModel>);}
+@{ var memberTypeList = (TempData["MemberTypeList"] as List<@GolfCentraAdmin.ViewModel.MemberTypeViewModel>);}
+@{ var equipmentList = (TempData["EquipmentList"] as List<@GolfCentraAdmin.ViewModel.EquipmentViewModel>);}
+
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Add Booking</h3>
+
+    </div>
+
+
+</div>
+
+@Html.HiddenFor(x => x.SlotSessionId,new { @id="hdnSlotSessionId"})
+@Html.HiddenFor(x => x.CoursePairingId, new { @id = "hdnCoursePairingId" })
+@Html.HiddenFor(x => x.SessionId, new { @id = "hdnSessionId" })
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body">
+
+            <form>
+                <span id="firstDiv">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Category">Category</label>
+                                <select class="form-control custom-select" id="ddlBookingType">
+                                    <option value="1">Book a Tee Time</option>
+                                    <option value="2">Book Driving Range</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Session">Session</label>
+                                <select class="form-control custom-select" id="ddlSessionType">
+                                    @foreach (var item in sessionList)
+                                    {
+                                        <option value="@(item.SessionId)">@item.SessionName</option>
+
+                                    }
+                                </select>
+
+                                <select class="form-control custom-select" id="ddlSessionTypeBDR">
+                                    @foreach (var item in sessionListBDR)
+                                    {
+                                        <option value="@(item.SessionId)">@item.SessionName</option>
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Date">Date</label>
+                                <input type="text" class="form-control" id="txtdate" onchange="GetSessionTimeDetail()">
+                            </div>
+                        </div> <div class="col-sm-6 col-xs-6">
+                            <div class="form-group" id="divCourseType">
+                                <label for="Holes">Start Course</label>
+                                <select class="form-control custom-select" id="ddlStartCourse"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="time">Session Time - No Of Player Left</label>
+                                <select class="form-control custom-select" id="ddlSessionTime"></select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6" id="divHoleType">
+                            <div class="form-group">
+                                <label for="Holes">Holes</label>
+                                <select class="form-control custom-select" id="ddlHoleType">
+                                    <option value="1">9 Holes</option>
+
+                                    <option value="2">18 Holes</option>
+
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 col-xs-6" id="divBucketType">
+                            <div class="form-group">
+                                <label for="Holes">Bucket </label>
+                                <select class="form-control custom-select" id="ddlBucketType"></select>
+                                @*<select class="form-control custom-select" id="ddlBucketType">
+                                        @foreach (var item in bucketList)
+                                        {
+                                            <option value="@(item.BucketDetailId)">@item.Balls</option>
+
+                                        }
+                                    </select>*@
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group" id="divBucketType">
+                                <label for="Holes">Member Type </label>
+                                <select class="form-control custom-select" id="ddlMemberType">
+                                    @foreach (var item in memberTypeList)
+                                    {
+                                        <option value="@(item.MemberTypeId)">@item.Name</option>
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Players">Players</label>
+                                <select class="form-control custom-select" id="ddlPlayerMaster">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            @foreach (var item in memberTypeList)
+                            {
+                                <div class="form-group">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">@item.Name</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" min="0" class="form-control" id="@item.MemberTypeId" placeholder="0" onkeyup="OnPlayerBoxEdit()" onkeypress="return isNumber(event)">
+                                        </div>
+                                        @*<label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Non-Member</label>
+                                            <div class="col-sm-3">
+                                                <input type="number" class="form-control" id="nonMemberPlayer" placeholder="0" onkeyup="OnPlayerBoxEdit()">
+                                            </div>*@
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    <button type="button" class="btn btn-success waves-effect waves-light m-r-10" style="background-color:#28a745" onclick="OnNextButtonClick()">Next</button>
+                    <div id="divMessage1"></div>
+                </span>
+
+                <span style="display:none" id="nextButtonDiv">
+                    <div class="row" id="divCartCaddie">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Caddies">No. of Cart</label>
+                                <select class="form-control custom-select" id="ddlCart">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <div style="display:none" id="hiddenCartCharge"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Caddies">No. of Caddies</label>
+                                <select class="form-control custom-select" id="ddlCaddie">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <div style="display:none" id="hiddenCaddieCharge"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" id="divCartCaddiePrice">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="cart">Cart Charges</label>
+                                <input type="text" class="form-control" id="cartCharges" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="caddiecharges">Caddie Charges</label>
+                                <input type="number" class="form-control" id="caddieCharges" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                    @if (equipmentList != null && equipmentList.Count != 0)
+                    {
+                        <div class="row" id="equipmentDiv">
+                            Equipment Rental
+                            <div class="col-sm-6 col-xs-6">
+                                @foreach (var item in equipmentList)
+                                {
+                                    <div class="form-group">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">@item.Name</label>
+                                            <div class="col-sm-3">
+                                                <input type="number" min="0" class="form-control" id="equ@(item.EquipmentId)" placeholder="0" onchange="OnEquipmetBoxEdit()" onkeypress="return isNumber(event)">
+                                            </div>
+                                            @*<label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Non-Member</label>
+                                <div class="col-sm-3">
+                                    <input type="number" class="form-control" id="nonMemberPlayer" placeholder="0" onkeyup="OnPlayerBoxEdit()">
+                                </div>*@
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6" id="divGreenFee">
+                            <div class="form-group">
+                                <label for="Green_Fee">Green Fee</label>
+                                <input type="text" class="form-control" id="Greenfee" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6" id="divRangeFee">
+                            <div class="form-group">
+                                <label for="Green_Fee">Range Fee</label>
+                                <input type="text" class="form-control" id="Rangefee" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xs-6" id="divBallFee">
+                            <div class="form-group">
+                                <label for="Green_Fee">Ball Fee</label>
+                                <input type="text" class="form-control" id="Ballfee" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group" id="divEquipmentPrice">
+                                <label for="Equipment">Equipment Price </label>
+                                <input type="text" class="form-control" id="equipmentPrice" disabled>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Session">Coupon Code</label>
+                                <input type="text" class="form-control" id="couponCode">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="caddiecharges">&nbsp;</label>
+                                <button onclick="CouponCheck()" type="button" class="btn btn-success waves-effect waves-light m-r-10">Apply</button>
+                                <div id="divCoupon"></div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="Session">Discount</label>
+                                <input type="text" class="form-control" id="discount" onkeyup="OnDiscountAdd()" onkeypress="return isDecimal(this,event)" disabled>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="caddiecharges">Total Amount</label>
+                                <input type="text" class="form-control" id="amount" disabled>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row" id="player0">
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Membership Number</label>
+                                <input type="text" class="form-control" id="SearchString0" onkeyup="CompleteBoxV2('0');" onclick="ResetCompletebox('0')">
+                            </div>
+                            <div id="divAcHtml0" class="scorepost-name" style="display: none;">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Name</label>
+                                <input type="text" class="form-control" id="name0">
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Email ID</label>
+                                <input type="email" class="form-control" id="email0">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Contact Number</label>
+                                <input type="text" class="form-control" id="contact0">
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row" id="player1" style="display:none">
+                        <div class="col-sm-3 col-xs-3" id="divSearchString1">
+                            <div class="form-group">
+                                <label for="caddiecharges">Membership Number</label>
+                                <input type="text" class="form-control" id="SearchString1" onkeyup="CompleteBoxV2('1');" onclick="ResetCompletebox('1')">
+                            </div>
+                            <div id="divAcHtml1" class="scorepost-name" style="display: none;">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Name</label>
+                                <input type="text" class="form-control" id="name1">
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3 col-xs-3"  id="divemail1">
+                            <div class="form-group">
+                                <label for="caddiecharges">Email ID</label>
+                                <input type="email" class="form-control" id="email1">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Contact Number</label>
+                                <input type="text" class="form-control" id="contact1">
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row" id="player2" style="display:none">
+                        <div class="col-sm-3 col-xs-3" id="divSearchString2">
+                            <div class="form-group">
+                                <label for="caddiecharges">Membership Number</label>
+                                <input type="text" class="form-control" id="SearchString2" onkeyup="CompleteBoxV2('2');" onclick="ResetCompletebox('2')">
+                            </div>
+                            <div id="divAcHtml2" class="scorepost-name" style="display: none;">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Name</label>
+                                <input type="text" class="form-control" id="name2" >
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3 col-xs-3"  id="divemail2">
+                            <div class="form-group">
+                                <label for="caddiecharges">Email ID</label>
+                                <input type="email" class="form-control" id="email2">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Contact Number</label>
+                                <input type="text" class="form-control" id="contact2">
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row" id="player3" style="display:none">
+                        <div class="col-sm-3 col-xs-3" id="divSearchString3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Membership Number</label>
+                                <input type="text" class="form-control" id="SearchString3" onkeyup="CompleteBoxV2('3');" onclick="ResetCompletebox('3')">
+                            </div>
+                            <div id="divAcHtml3" class="scorepost-name" style="display: none;">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Name</label>
+                                <input type="text" class="form-control" id="name3">
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3 col-xs-3" id="divemail3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Email ID</label>
+                                <input type="email" class="form-control" id="email3">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <label for="caddiecharges">Contact Number</label>
+                                <input type="text" class="form-control" id="contact3">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    
+                    <button type="button" class="btn btn-success waves-effect waves-light m-r-10" style="background-color:#28a745" onclick="BackButton()">Back</button>
+
+                    <button type="button" class="btn btn-success waves-effect waves-light m-r-10" style="background-color:#28a745" onclick="SaveBooking()">Save</button>
+                    <div id="divMessage"></div>
+                </span>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+
+@section scripts{
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+    <script src="~/Scripts/Custom/OnSpotBookingController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            jQuery('#txtdate').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true,
+                startDate: new Date(),
+
+            }).datepicker("setDate", "0");
+            var someDate = new Date();
+            var numberOfDaysToAdd = 6;
+           someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+
+            $('#txtdate').datepicker("setEndDate", someDate);
+            OnSpotBookingReady();
+
+
+
+        });
+    </script>
+}

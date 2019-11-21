@@ -1,0 +1,77 @@
+﻿@model GolfCentraAdmin.ViewModel.SessionMasterViewModel
+@*@{ Layout = "~/Views/Shared/_PartialLayoutPage.cshtml";}*@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.css" rel="stylesheet" />
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content popup_adj">
+        <div class="modal-header" style="padding-bottom:35px">
+            <h4 class="modal-title" id="myLargeModalLabel">Session Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divSessionPopUp')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                @using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnSessionDetailEditBegin", OnSuccess = "OnSessionDetailEditSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "SessionDetail/UpdateSessionDetail" }))
+                {
+                    <div class="col-md-12">
+                        <div class="card card-body">
+                            @Html.HiddenFor(x => x.SessionId)
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Name</label>
+                                            @Html.TextBoxFor(x => x.SessionName, new { @id = "txtName", @autocomplete = "off", @class = "form-control", @placeholder = "Name" })
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Start Time</label>
+                                            @Html.TextBoxFor(x => x.StartTime, new { @id = "txtStartTime1", @autocomplete = "off", @class = "form-control", @placeholder = "Start Time" })
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Mobilenumber">End Time</label>
+                                            @Html.TextBoxFor(x => x.EndTime, new { @id = "txtEndTime", @autocomplete = "off", @class = "form-control", @placeholder = "End Time" })
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" id="btnSubmitPopUp">Submit</button>
+                                        <div id="divMessagePopUp"></div>
+                                        <div id="divLoaderPopUp" style="display:none">
+                                            <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#txtStartTime1').clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                autoclose: true,
+                'default': 'now'
+            });
+            $('#txtEndTime').clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                autoclose: true,
+                'default': 'now'
+            });
+        });
+    </script>
+
+

@@ -1,0 +1,129 @@
+﻿@model List<GolfCentraAdmin.ViewModel.SessionDetailViewModel>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+                @*  Member*@
+            </h4>
+
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>User Name</th>
+                            <th> Log In</th>
+                            <th>Logged Out At</th>
+
+                            <th>Activity Details</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var count = 0;}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>@item.UserName</td>
+                                <td>@item.LoggedIn.GetValueOrDefault().ToShortDateString()</td>
+                                @if (item.LoggedOutAt == null) { <td></td>}
+                                else
+                                {<td>@item.LoggedOutAt.GetValueOrDefault().ToShortDateString()</td>}
+
+
+                                <td>
+                                    <a href="" data-toggle="modal" data-target="#eq@(count)"><div class="label label-table label-success">Activity</div></a>
+                                    <div class="modal fade " tabindex="-1" id="eq@(count)" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content popup_adj">
+                                                <div class="modal-header" style="padding-bottom:35px">
+                                                    <h4 class="modal-title" id="myLargeModalLabel">Activity Information</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+
+                                                        <div class="col-md-12">
+                                                            <div class="card card-body">
+                                                                <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+                                                                    @if (item.SessionActivityViewModels != null)
+                                                                    {
+                                                                        if (item.SessionActivityViewModels.Count() != 0)
+                                                                        {
+                                                                            <table class="table" style="width:80%">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>
+                                                                                            Page
+                                                                                        </th>
+                                                                                        <th>Arrive At</th>
+                                                                                        <th>Info</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach (var item1 in item.SessionActivityViewModels)
+                                                                                    {
+                                                                                    <tr>
+                                                                                        <td>@item1.DisplayName</td>
+                                                                                        <td>@item1.ArriveAt</td>
+                                                                                        <td>
+                                                                                            @if (@item1.Info != null)
+                                                                                            {
+                                                                                                @Html.Raw(@item1.Info.Replace("\r\n", "<br/>"));
+                                                                                            }
+
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    }
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div> No Record Exist</div>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div> No Record Exist</div>
+                                                                    }
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel'
+            ]
+        });
+    });
+</script>

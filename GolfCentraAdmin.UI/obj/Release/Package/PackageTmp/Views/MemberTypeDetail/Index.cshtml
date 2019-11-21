@@ -1,0 +1,79 @@
+﻿        <!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Member Type</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="form-body">
+
+                    <div class="row p-t-20">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" id="txtName" class="form-control"  placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Value To Show</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" id="txtValueToShow" class="form-control"  placeholder="Value To Show">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+
+                                <button type="button" class="btn btn-info" onclick="SaveMemberType()"> <i class="fa fa-check"></i>  Submit</button>
+                                <div id="divMessage"></div>
+                                <div id="divLoader" style="display:none">
+                                    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <span id="divMemberDetailTable"></span>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+
+</div>
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divMemberPopUp"></div>
+@section scripts{
+
+    <script src="~/Scripts/Custom/MemberTypeDetailController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnMemberTypeDetailsReady();
+
+        });
+    </script>
+}

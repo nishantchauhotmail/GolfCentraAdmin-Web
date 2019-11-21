@@ -1,0 +1,28 @@
+﻿@model List<GolfCentraAdmin.ViewModel.PageViewModel>
+<div class="table-responsive" style="width:70%">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Page</th>
+                <th width="200px">Priority</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model)
+            {
+            <tr>
+                <td><a href="javascript:void(0)">@item.PageId</a></td>
+                <td>@item.PageName</td>
+                <td>@item.Ordering</td>
+                <td>
+                    <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.PageId','@item.Ordering')">Edit</a>
+                </td>
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

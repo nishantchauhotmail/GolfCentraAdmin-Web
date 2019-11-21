@@ -1,0 +1,78 @@
+﻿
+@model List<GolfCentraAdmin.ViewModel.GolferViewModel>
+    @if (Model != null && Model.Count != 0)
+    {
+<div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+    <table class="table" style="width:80%">
+        <thead>
+            <tr>
+                <th width="250px">Golfer ID</th>
+                <th width="200px">Golfer Name</th>
+                <th width="200px">Age</th>
+                <th width="200px">ClubMemberId</th>
+                <th width="200px">Edit</th>
+                <th>View</th>
+                <th>Change Password</th>
+                <th>Report</th>
+                <th>Update Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td><a href="javascript:void(0)">@item.GolferId</a></td>
+                <td>@item.Name @item.LastName</td>
+                @if (@item.Age == "" || @item.Age == null)
+                {
+                    <td>N/A</td>
+                }
+                else
+                {
+                    <td>@item.Age</td>
+                }
+                @if (@item.ClubMemberId == "" || @item.ClubMemberId == null)
+                {
+                    <td>N/A</td>
+                }
+                else
+                {
+                    <td>@item.ClubMemberId</td>
+                }
+
+                @*  <td>@item.MemberTypeId</td>*@
+                <td>
+
+                    <a href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/UpdateGolfer/Index?golferId=@item.GolferId"><div class="label label-table label-success">Edit</div></a>
+                </td>
+                <td class="text-center">
+                    <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="userDetailsByUserId('@item.GolferId')"><div class="label label-table label-success">View</div></a>
+                </td>
+                <td class="text-center">
+                    <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateGolferPasswordPopUp('@item.GolferId')"><div class="label label-table label-success">Change Password</div></a>
+                </td>
+                <td>
+                    <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UserReport(@item.GolferId)"><div class="label label-table label-success">Report</div></a>
+                </td>
+                <td id="divBlocked@(item.GolferId)">
+                    @if (item.IsBlocked == true)
+                    {
+                        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserStatusPopUP('@item.GolferId', 'false')"><div class="label label-table label-success">UnBlock</div></a>
+
+                    }
+                    else
+                    { <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserStatusPopUP('@item.GolferId', 'true')"><div class="label label-table label-success">Block</div></a>
+                    }
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+    }
+    else
+    {
+        <div> No Record Found.</div>
+
+    }

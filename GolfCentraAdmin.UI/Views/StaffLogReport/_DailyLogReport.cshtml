@@ -1,0 +1,78 @@
+﻿
+@model List<GolfCentraAdmin.ViewModel.SessionDetailViewModel>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+                @*  Member*@
+            </h4>
+
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+
+                            <th>User Name</th>
+                            <th> Log In</th>
+                            <th>Logged Out At</th>
+
+                            <th>Activity Name</th>
+                            <th>Activity Time</th>
+                            <th>Activity Info</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var count = 0;}
+                        @foreach (var item in Model)
+                        {
+                            if (item.SessionActivityViewModels != null)
+                            {
+                                if (item.SessionActivityViewModels.Count() != 0)
+                                {
+                                    foreach (var item1 in item.SessionActivityViewModels)
+                                    {
+                                        <tr>
+
+                                            <td>@item.UserName</td>
+                                            <td>@item.LoggedIn.GetValueOrDefault().ToShortDateString()</td>
+                                            @if (item.LoggedOutAt == null)
+                                            {
+                                                <td></td>}
+                                            else
+                                            {
+                                                <td>@item.LoggedOutAt.GetValueOrDefault().ToShortDateString()</td>}
+
+                                            <td>@item1.DisplayName</td>
+                                            <td>@item1.ArriveAt</td>
+                                            <td>
+                                                @if (@item1.Info != null)
+                                                {                               
+                                                    @Html.Raw(@item1.Info.Replace("\r\n", "<br/>"));
+                                                }
+
+                                            </td>
+
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel'
+            ]
+        });
+    });
+</script>

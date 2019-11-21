@@ -1,0 +1,198 @@
+﻿@model GolfCentraAdmin.ViewModel.BookingViewModel
+@{ Layout = "~/Views/Shared/_PartialLayoutPage.cshtml";}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" style="height:600px; ">
+        <div class=" modal-header modalheader popup1">
+            <h4 class="modal-title" id="myLargeModalLabel">Booking Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divBookingPopUp')">×</button>
+        </div>
+        <div class="modal-body" style=" overflow: scroll;">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label for="inputbooking" class="col-sm-2 control-label col-form-label">Booking ID :</label>
+                                <label for="inputbookingId" class="col-sm-4 control-label col-form-label">@Model.BookingId*</label>
+                                <label for="inputname" class="col-sm-2 control-label col-form-label">User Name :</label>
+                                <label for="inputname" class="col-sm-4 control-label col-form-label">@Model.UserName</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputholes" class="col-sm-2 control-label col-form-label">Holes :</label>
+                                <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.NoOfHole</label>
+                                <label for="inputplayers" class="col-sm-2 control-label col-form-label">No. Of Players :</label>
+                                <label for="inputplayers" class="col-sm-4 control-label col-form-label">@Model.NoOfPlayer</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputdate" class="col-sm-2 control-label col-form-label">Tee Off Date & Time:</label>
+                                <label for="inputdate" class="col-sm-4 control-label col-form-label">@Model.TeeOffDate  @Model.Time</label>
+                                <label for="inputbookingdate" class="col-sm-2 control-label col-form-label">Booking Date :</label>
+                                <label for="inputbookingdate" class="col-sm-4 control-label col-form-label">@Model.BookingDate</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Total Amount :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label"> @Model.CurrencyName  @Model.TotalAmount</label>
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Paid Amount :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label"> @Model.CurrencyName  @Model.PaidAmount</label>
+
+
+                              
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Cart Fee :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label">@Model.CartFee</label>
+                                <label for="inputcaddie" class="col-sm-2 control-label col-form-label">No. of Caddie:</label>
+                                <label for="inputcaddie" class="col-sm-4 control-label col-form-label">@Model.NoOfCaddie</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Caddie Fee :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label">@Model.CaddieFee</label>
+                                <label for="inputgreenfee" class="col-sm-2 control-label col-form-label">Green Fee :</label>
+                                <label for="inputgreenfee" class="col-sm-4 control-label col-form-label">@Model.GreenFee</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputballs" class="col-sm-2 control-label col-form-label">No. of Balls :</label>
+                                <label for="inputballs" class="col-sm-4 control-label col-form-label">@Model.NoOfBalls</label>
+                                <label for="inputballfee" class="col-sm-2 control-label col-form-label">Ball Fee :</label>
+                                <label for="inputballfee" class="col-sm-4 control-label col-form-label">@Model.BallFee</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Range Fee :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label">@Model.RangeFee</label>
+                                <label for="inputcaddie" class="col-sm-2 control-label col-form-label">Discount :</label>
+                                <label for="inputcaddie" class="col-sm-4 control-label col-form-label">@Model.Discount</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">Course :</label>
+                                <label for="inputfee" class="col-sm-4 control-label col-form-label">@Model.CoursePairingName</label>
+                                <label for="inputcart" class="col-sm-2 control-label col-form-label">No. Of Cart :</label>
+                                <label for="inputcart" class="col-sm-4 control-label col-form-label">@Model.NoOfCart</label>
+                            </div>
+                            <div class="form-group row">
+                                @foreach (var item in Model.MemberTypeViewModels)
+                                {
+                                    <label for="inputfee" class="col-sm-4 control-label col-form-label">Member Type Name :</label>
+                                    <label for="inputfee" class="col-sm-4 control-label col-form-label">@item.Name</label>
+                                    <label for="inputfee" class="col-sm-4 control-label col-form-label">@item.PlayerCount</label>
+                                }
+                            </div>
+                            @if (Model.PromotionViewModel != null)
+                            {
+                                <div class="form-group row">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Promotion Name</th>
+                                                <th>Green Fee</th>
+                                                <th>Cart Fee</th>
+                                                <th>Caddie Fee</th>
+                                                <th>Equipment </th>
+                                                <th>Extra</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Model.PromotionViewModel.Name </td>
+                                                <td>@Model.PromotionViewModel.GreenFee</td>
+                                                <td>@Model.PromotionViewModel.CartFee</td>
+                                                <td>@Model.PromotionViewModel.CaddieFee</td>
+                                                <td>@Model.PromotionViewModel.EquipmentName</td>
+                                                <td>@Model.PromotionViewModel.Extra</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+
+                            @if (Model.BookingEquipmentMappingViewModels != null && Model.BookingEquipmentMappingViewModels.Count != 0)
+                            {
+                                <div class="form-group row">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Equipment Name</th>
+                                                <th>Equipment Count</th>
+                                                <th>Total  Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.BookingEquipmentMappingViewModels)
+                                            {
+                                                <tr>
+                                                    <td>@item.EquipmentName</td>
+                                                    <td>@item.EquipmentCount </td>
+                                                    <td>@{var price = item.EquipmentPrice * item.EquipmentCount;} @price</td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+
+
+
+
+                                </div>
+                            }
+                            @if (Model.BookingPlayerDetailViewModel != null)
+                            {
+                                <div class="form-group row">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Player</th>
+                                                <th>Name/Membership Number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.BookingPlayerDetailViewModel.Player1 != "" && Model.BookingPlayerDetailViewModel.Player1 != null)
+                                            {
+                                                <tr>
+                                                    <td> Player 1 </td>
+                                                    <td> @Model.BookingPlayerDetailViewModel.Player1</td>
+                                                </tr>
+                                            }
+                                            @if (Model.BookingPlayerDetailViewModel.Player2 != "" && Model.BookingPlayerDetailViewModel.Player2 != null)
+                                            {
+                                                <tr>
+                                                    <td> Player 2 </td>
+                                                    <td> @Model.BookingPlayerDetailViewModel.Player2</td>
+                                                </tr>
+                                            }
+                                            @if (Model.BookingPlayerDetailViewModel.Player3 != "" && Model.BookingPlayerDetailViewModel.Player3 != null)
+                                            {
+                                                <tr>
+                                                    <td> Player 3 </td>
+                                                    <td> @Model.BookingPlayerDetailViewModel.Player3</td>
+                                                </tr>
+                                            }
+                                            @if (Model.BookingPlayerDetailViewModel.Player4 != "" && Model.BookingPlayerDetailViewModel.Player4 != null)
+                                            {
+                                                <tr>
+                                                    <td> Player 4 </td>
+                                                    <td> @Model.BookingPlayerDetailViewModel.Player4</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            <div class="form-group m-b-0">
+                                <div class=" col-sm-9">
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-t-10" data-dismiss="modal" onclick="CloseModalPopup('divBookingPopUp')">Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

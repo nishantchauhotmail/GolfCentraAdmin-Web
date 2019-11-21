@@ -1,0 +1,102 @@
+﻿@model GolfCentraAdmin.ViewModel.GolferViewModel
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content" style="height:600px; ">
+        <div class=" modal-header modalheader popup1">
+            <h4 class="modal-title" id="myLargeModalLabel">Golfer Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divGolferPopUp')">×</button>
+        </div>
+        <div class="modal-body" style=" overflow: scroll;">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label for="inputbooking" class="col-sm-2 control-label col-form-label">Golfer ID :</label>
+                                <label for="inputbookingId" class="col-sm-4 control-label col-form-label">@Model.GolferId</label>
+                                <label for="inputname" class="col-sm-2 control-label col-form-label"> Name :</label>
+                                <label for="inputname" class="col-sm-4 control-label col-form-label">@Model.Name @Model.LastName</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputholes" class="col-sm-2 control-label col-form-label">Age :</label>
+                                @if (@Model.Age == "" || @Model.Age == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.Age  </label>
+                                }
+                                <label for="inputplayers" class="col-sm-2 control-label col-form-label">Email :</label>
+                                <label for="inputplayers" class="col-sm-4 control-label col-form-label">@Model.EmailAddress</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputdate" class="col-sm-2 control-label col-form-label">Club member Id :</label>
+                                @if (@Model.ClubMemberId == "" || @Model.ClubMemberId == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.ClubMemberId  </label>
+                                }
+
+                                <label for="inputbookingdate" class="col-sm-2 control-label col-form-label">Member Since :</label>
+                                @if (@Model.MemberSince.GetValueOrDefault().Year == 0001 || @Model.MemberSince == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.MemberSince  </label>
+                                }
+                               </div>
+                            <div class="form-group row">
+                                <label for="inputpayment" class="col-sm-2 control-label col-form-label">Mobile :</label>
+                                <label for="inputpayment" class="col-sm-4 control-label col-form-label">@Model.Mobile</label>
+                                <label for="inputcart" class="col-sm-2 control-label col-form-label">Occpoution :</label>
+                                @if (@Model.Occpoution == "" || @Model.Occpoution == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.Occpoution  </label>
+                                }
+                              
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputfee" class="col-sm-2 control-label col-form-label">SpouseName:</label>
+                                @if (@Model.SpouseName == "" || @Model.SpouseName == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.SpouseName  </label>
+                                }
+
+                                <label for="inputcaddie" class="col-sm-2 control-label col-form-label">SpecialComments:</label>
+                                @if (@Model.SpecialComments == "" || @Model.SpecialComments == null)
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">N/A  </label>
+                                }
+                                else
+                                {
+                                    <label for="inputholenumber" class="col-sm-4 control-label col-form-label">@Model.SpecialComments  </label>
+                                }
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

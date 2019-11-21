@@ -1,0 +1,119 @@
+﻿@model GolfCentraAdmin.ViewModel.EmployeeViewModel   
+   <!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Employee Management</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body">
+            <!--  <h3 class="box-title m-b-0">Sample Basic Forms</h3>
+            <p class="text-muted m-b-30 font-13"> Bootstrap Elements </p>-->
+            @using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnEmployeeAddBegin", OnSuccess = "OnEmployeeAddSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "EmployeeManagement/SaveEmployee" }))
+            {
+            <form>
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            @Html.TextBoxFor(x => x.Name, new { @id = "txtName", @autocomplete = "off", @class = "form-control", @placeholder = "Name" })
+                      
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            @Html.TextBoxFor(x => x.EmailId, new { @id = "txtEmail", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                         
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            @Html.PasswordFor(x => x.Password, new { @id = "txtPassword", @autocomplete = "off", @class = "form-control", @placeholder = "Password" })
+                          
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Confirm Password</label>
+                            <input type="password" class="form-control" id="txtChangePassword">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="MobileNumber">Mobile Number</label>
+                            @Html.TextBoxFor(x => x.Mobile, new { @id = "txtMobile", @autocomplete = "off", @class = "form-control", @placeholder = "Mobile" })
+                          
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            @Html.DropDownList("GenderTypeId", new SelectList(Model.GenderTypeViewModels, "GenderTypeId", "Value"), "Please Select A Gender", new { @class = "form-control custom-select", @id = "ddlGenderType", @autocomplete = "off" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label>Role Admin</label>
+                            @Html.DropDownList("EmployeeTypeId", new SelectList(Model.EmployeeTypeViewModels, "EmployeeTypeId", "Value"), "Please Select A Employee Type", new { @class = "form-control custom-select", @id = "ddlEmployeeType", @autocomplete = "off" })
+
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" style="background-color:#28a745" id="btnSubmit">Submit</button>
+                <div id="divMessage"></div>
+                <div id="divLoader" style="display:none">
+                    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                </div>
+
+            </form>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+<div class="row" id="divResult">
+    <!-- Column -->
+    <!-- Column -->
+
+</div>
+<!-- ============================================================== -->
+<!-- User Edits ends -->
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divTimePopUp"></div>
+@section scripts{
+    <script src="~/Scripts/Custom/EmployeeManagementController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnEmployeeManagementReady();
+        });
+    </script>
+}

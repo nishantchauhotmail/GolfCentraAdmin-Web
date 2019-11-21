@@ -1,0 +1,250 @@
+﻿@model GolfCentraAdmin.ViewModel.ScoreDetailsViewModel
+    <style>
+
+        .value-button {
+            display: inline-block;
+            border: 1px solid #ddd;
+            margin: 0px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 11px 0;
+            background: #eee;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .value-button:hover {
+                cursor: pointer;
+            }
+
+        form #decrease {
+            margin-right: -4px;
+            border-radius: 8px 0 0 8px;
+        }
+
+        form #increase {
+            margin-left: -4px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        form #input-wrap {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        input#number {
+            text-align: center;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            margin: 0px;
+            width: 40px;
+            height: 40px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .carousel-control-next, .carousel-control-prev {
+            position: absolute;
+            top: -248px !important;
+            bottom: 0;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 15%;
+            color: #fff;
+            text-align: center;
+            opacity: .5;
+        }
+
+    </style>
+<h4 class="text-center" style="padding:10px 0px">Course Details </h4>
+@using (Ajax.BeginForm("SaveScoreCard", null, new AjaxOptions { OnBegin = "OnAddScoreCardBegin", OnSuccess = "OnAddScoreCardSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "ScoreManagement/SaveScoreCard" }, new { @class = "" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ScoreId)
+    <div id="carouselExampleControls" class="carousel">
+        <div class="carousel-inner">
+            @{ var count = 1; var activeClass = "carousel-item ";}
+            @foreach (var item in Model.ScoreViewModels)
+            {
+                @Html.HiddenFor(x => x.ScoreViewModels[count - 1].HoleNumber)
+                @Html.HiddenFor(x => x.ScoreViewModels[count - 1].HoleName)
+                @Html.HiddenFor(x => x.ScoreViewModels[count - 1].ScoreId)
+                if (count == 1) { activeClass = "carousel-item active"; } else { activeClass = "carousel-item "; }
+                <div class=" @(activeClass)">
+                    <div class="container text-center" style="background-color:#eee; padding:10px 0px 0px 0px">
+                        <div class="row">
+                            @if (count != 1)
+                            {
+                                <div class="col" onclick="MoveToPreviousHole(@(count))">
+                                    <div class="form-group">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hole">Hole</label>
+                                    <label for="">@item.HoleNumber</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="par">par</label>
+                                    <label for="" id="par@(count)">@item.Par</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="SI">SI</label>
+                                    <label for="">@item.StorkeIndex</label>
+                                </div>
+                            </div>
+                            @if (count != Model.ScoreViewModels.Count())
+                            {
+                                <div class="col" onclick="MoveToNextHole(@(count))">
+                                    <div class="form-group">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="row" style="background-color:#f9f9f9; padding-top:10px">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hole">Strokes</label>
+                                    <label for=""></label>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                                <div class="value-button" id="decrease" onclick="decreaseValue('stroke',@(count))" value="Decrease Value">-</div>
+                                @Html.TextBoxFor(x => x.ScoreViewModels[count - 1].Storkes, new { @id = "stroke" + @count, type = "number", @class = "value-button" })
+                                @* <input type="number" id="number" value="0" />*@
+                                <div class="value-button" id="increase" onclick="increaseValue('stroke',@(count))" value="Increase Value">+</div>
+
+                            </div>
+
+                        </div>
+                        <div class="row" style="background-color:#f9f9f9; padding-top:10px">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hole">Putts</label>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                                <div class="value-button" id="decrease" onclick="decreaseValue('putt',@(count))" value="Decrease Value">-</div>
+                                @Html.TextBoxFor(x => x.ScoreViewModels[count - 1].Putts, new { @id = "putt" + @count, type = "number", @class = "value-button" })
+                                <div class="value-button" id="increase" onclick="increaseValue('putt',@(count))" value="Increase Value">+</div>
+
+                            </div>
+
+                        </div>
+                        <div class="row" style="background-color:#f9f9f9; padding-top:10px">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hole">Drive</label>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                                <div class="value-button" id="decrease" onclick="decreaseValue('drive',@(count))" value="Decrease Value">-</div>
+                                @Html.TextBoxFor(x => x.ScoreViewModels[count - 1].Drive, new { @id = "drive" + @count, type = "number", @class = "value-button" })
+                                <div class="value-button" id="increase" onclick="increaseValue('drive',@(count))" value="Increase Value">+</div>
+
+                            </div>
+
+                        </div>
+                        <div class="row" style="background-color:#f9f9f9; padding-top:10px">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="hole">Sand</label>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                                <div class="value-button" id="decrease" onclick="decreaseValue('sand',@(count))" value="Decrease Value">-</div>
+                                @Html.TextBoxFor(x => x.ScoreViewModels[count - 1].Sand, new { @id = "sand" + @count, type = "number", @class = "value-button" })
+                                <div class="value-button" id="increase" onclick="increaseValue('sand',@(count))" value="Increase Value">+</div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="display:none">
+                        @(count++);
+
+                    </div>
+                </div>
+            }
+            <div id="totalCountValue" style="display:none">@count</div>
+            <div id="activeIndex" style="display:none">1</div>
+        </div>
+    </div>
+
+    <div class="container text-center" style="background-color:#eee; padding:10px 0px 0px 0px">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="total">Total/Round Total</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="" id="divTotal">0</label>
+                    <label for="">/</label>
+                    <label for="" id="divRoundTotal">0</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @Html.HiddenFor(x => x.GrossScore, new { @id = "hdnGrossScore" });
+    @Html.HiddenFor(x => x.TotalScore, new { @id = "hdnTotalScore" })
+    <div class="container text-center" style="margin-top:20px">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <button type="button" class="btn btn-danger" onclick="RefreshCurrentPageData()"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+                    <div id="divMessage"></div>
+                    <div id="divLoader" style="display:none">
+                        <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}
+@section scripts{
+  
+    <script src="~/Scripts/Custom/EditScoreController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CalculateScore()
+        });
+    </script>
+}

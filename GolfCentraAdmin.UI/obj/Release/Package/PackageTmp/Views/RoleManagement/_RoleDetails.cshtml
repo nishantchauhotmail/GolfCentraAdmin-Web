@@ -1,0 +1,45 @@
+﻿@model GolfCentraAdmin.ViewModel.PermissionMainViewModel
+@Html.HiddenFor(x => x.EmployeeId)
+<label class="element1">Model</label>
+
+<div class="form-group row p-t-20">
+
+    @for (int i = 0; i < Model.PermissionViewModels.Count; i++)
+    {
+        @Html.HiddenFor(x => x.PermissionViewModels[i].IsSideMenuPage)
+        @Html.HiddenFor(x => x.PermissionViewModels[i].PageId)
+        @Html.HiddenFor(x => x.PermissionViewModels[i].PageRightId)
+
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(m => Model.PermissionViewModels[i].IsPermisson, new { @id = "customCheck" + i, @autocomplete = "off", @class = "custom-control-input" })
+                @* <input type="checkbox" class="custom-control-input" id="customCheck@(count)" value="@item.IsPermisson">*@
+
+                @if (Model.PermissionViewModels[i].PageId != 26 && Model.PermissionViewModels[i].PageId != 38)
+                {
+                    <label class="custom-control-label" for="customCheck@(i)">@Model.PermissionViewModels[i].PageName</label>
+                }
+                else
+                {
+                    if (Model.PermissionViewModels[i].PageId == 26)
+                    {<label class="custom-control-label" for="customCheck@(i)">Booking (Main Side Menu )</label>}
+                    if (Model.PermissionViewModels[i].PageId == 38)
+                    {<label class="custom-control-label" for="customCheck@(i)">Booking (Reporting)</label>}
+                }
+            </div>
+
+        </div>
+
+    }
+
+
+
+</div>
+
+
+
+<button type="submit" class="btn btn-success waves-effect waves-light m-r-10" id="btnSubmit">Update</button>
+<div id="divMessage"></div>
+<div id="divLoader" style="display:none">
+    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+</div>

@@ -1,0 +1,26 @@
+﻿@model List<GolfCentraAdmin.ViewModel.EmployeeTypeViewModel>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Role ID</th>
+            <th>Role Name</th>
+            <th>Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+        <tr>
+            <td><a href="javascript:void(0)">@item.EmployeeTypeId</a></td>
+            <td>@item.Value</td>
+            <td>
+                <div class="label label-table label-success">True</div>
+            </td>
+
+        </tr>
+        }
+
+
+    </tbody>
+</table>

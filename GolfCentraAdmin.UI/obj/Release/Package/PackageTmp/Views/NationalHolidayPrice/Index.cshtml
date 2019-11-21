@@ -1,0 +1,287 @@
+﻿@model GolfCentraAdmin.ViewModel.UpdatePriceViewModel
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">National Holiday Pricing</h3>
+
+    </div>
+
+
+</div>
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnUpdatePricingBegin", OnSuccess = "OnUpdatePricingSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "NationalHolidayPrice/SavePricing" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body">
+                <h3 class="box-title m-b-0">Book Tee Times</h3>
+                <p class="text-muted m-b-30 font-13"></p>
+                <div class="form-horizontal">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-4 text-right control-label col-form-label">How many time book session</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(x => x.NumberOfAllowedSessions, new { @id = "txtNoOfAllowedSession", @autocomplete = "off", @class = "form-control", @placeholder = "No Of Allowed Session" })
+                        </div>
+                    </div>
+                    <div style="padding:20px 0px">
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(x => x.Member, "True", new { @id = "txtMember", @autocomplete = "off", @name = "MemberType" })
+                            Member
+                        </label>
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(x => x.Member, "false", new { @id = "txtNonMember", @autocomplete = "off", @name = "MemberType" })
+                            Non Member
+                        </label>
+
+                    </div>
+                    @*<h3 class="box-title m-b-0">Set date</h3>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-4 text-right control-label col-form-label">Select Start and End Date</label>
+                        <div class="col-sm-6">
+                            <div class="example">
+
+                                <div class="input-daterange input-group" id="date-range">
+                                    @Html.TextBoxFor(x => x.StartDate, new { @id = "txtStartDate", @autocomplete = "off", @class = "form-control", @placeholder = "Start Date", @type = "date" })
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-info b-0 text-white">TO</span>
+                                    </div>
+                                    @Html.TextBoxFor(x => x.EndDate, new { @id = "txtEndDate", @autocomplete = "off", @class = "form-control", @placeholder = "End Date", @type = "date" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-horizontal">
+                <div class="col-md-6 right">
+                    <div class="card card-body">
+                        <h3 class="box-title m-b-0 cart_font">Book Tee Time (Monday to Friday)</h3>
+                        <p class="text-muted m-b-30 font-13"></p>
+                        <div class="form-group row">
+                            <label for="Green Fee" class="col-sm-4 text-right control-label col-form-label">Green Fee</label>
+                            @*<div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH27UpdatePriceViewModel.GreenFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+
+                            </div>*@
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH18UpdatePriceViewModel.GreenFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="taxes" class="col-sm-4 text-right control-label col-form-label">Taxes and Fees</label>
+                            @*<div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH27UpdatePriceViewModel.TaxAndFee, new { @id = "txtTaxAndFee", @autocomplete = "off", @class = "form-control", @placeholder = "TaxAndFee" })
+
+                            </div>*@
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH18UpdatePriceViewModel.TaxAndFee, new { @id = "txtTaxAndFee", @autocomplete = "off", @class = "form-control", @placeholder = "TaxAndFee" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Cart" class="col-sm-4 text-right control-label col-form-label">Add On Cart</label>
+                            @*<div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH27UpdatePriceViewModel.AddOnCart, new { @id = "txtAddOnCart", @autocomplete = "off", @class = "form-control", @placeholder = "Add On Cart" })
+
+                            </div>*@
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH18UpdatePriceViewModel.AddOnCart, new { @id = "txtAddOnCart", @autocomplete = "off", @class = "form-control", @placeholder = "Add On Cart" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Caddie" class="col-sm-4 text-right control-label col-form-label">Add On Caddie</label>
+                            @*<div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH27UpdatePriceViewModel.AddOnCaddie, new { @id = "txtAddOnCaddie", @autocomplete = "off", @class = "form-control", @placeholder = "AddOnCaddie" })
+
+                            </div>*@
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WDH18UpdatePriceViewModel.AddOnCaddie, new { @id = "txtAddOnCaddie", @autocomplete = "off", @class = "form-control", @placeholder = "AddOnCaddie" })
+
+                            </div>
+                        </div>
+                        <h3 class="box-title m-b-0 cart_font">Inclusive Convenience fee (Monday to Friday)</h3>
+                        <div class="form-group row">
+                            <label for="caddie" class="col-sm-4 text-right control-label col-form-label">Convenience Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WDH18UpdatePriceViewModel.ConvenienceFee, new { @id = "txtConvenienceFee", @autocomplete = "off", @class = "form-control", @placeholder = "ConvenienceFee" })
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="col-md-6 right">
+                    <div class="card card-body">
+                        <h3 class="box-title m-b-0 cart_font">Book Tee Time (Saturday to Sunday)</h3>
+                        <p class="text-muted m-b-30 font-13"></p>
+
+                        <div class="form-group row">
+                            <label for="Green Fee" class="col-sm-4 text-right control-label col-form-label">Green Fee</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH27UpdatePriceViewModel.GreenFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH18UpdatePriceViewModel.GreenFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="taxes" class="col-sm-4 text-right control-label col-form-label">Taxes and Fees</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH27UpdatePriceViewModel.TaxAndFee, new { @id = "txtTaxAndFee", @autocomplete = "off", @class = "form-control", @placeholder = "TaxAndFee" })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH18UpdatePriceViewModel.TaxAndFee, new { @id = "txtTaxAndFee", @autocomplete = "off", @class = "form-control", @placeholder = "TaxAndFee" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Cart" class="col-sm-4 text-right control-label col-form-label">Add On Cart</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH27UpdatePriceViewModel.AddOnCart, new { @id = "txtAddOnCart", @autocomplete = "off", @class = "form-control", @placeholder = "Add On Cart" })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH18UpdatePriceViewModel.AddOnCart, new { @id = "txtAddOnCart", @autocomplete = "off", @class = "form-control", @placeholder = "Add On Cart" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Caddie" class="col-sm-4 text-right control-label col-form-label">Add On Caddie</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH27UpdatePriceViewModel.AddOnCaddie, new { @id = "txtAddOnCaddie", @autocomplete = "off", @class = "form-control", @placeholder = "AddOnCaddie" })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(x => x.WEH18UpdatePriceViewModel.AddOnCaddie, new { @id = "txtAddOnCaddie", @autocomplete = "off", @class = "form-control", @placeholder = "AddOnCaddie" })
+                            </div>
+                        </div>
+                        <h3 class="box-title m-b-0 cart_font">Inclusive Convenience fee (Saturday to Sunday)</h3>
+                        <div class="form-group row">
+                            <label for="caddie" class="col-sm-4 text-right control-label col-form-label">Convenience Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WEH18UpdatePriceViewModel.ConvenienceFee, new { @id = "txtConvenienceFee", @autocomplete = "off", @class = "form-control", @placeholder = "ConvenienceFee" })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>*@
+
+
+                <div class="col-md-6 right">
+                    <div class="card card-body">
+                        <h3 class="box-title m-b-0 cart_font">Book Driving Range (Monday to Friday)</h3>
+                        <p class="text-muted m-b-30 font-13"></p>
+
+                        <div class="form-group row">
+                            <label for="Green Fee" class="col-sm-4 text-right control-label col-form-label">Range Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WDDRUpdatePriceViewModel.RangeFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="taxes" class="col-sm-4 text-right control-label col-form-label">Taxes And Fees</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WDDRUpdatePriceViewModel.TaxAndFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "TaxAndFee" })
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="Cart" class="col-sm-4 text-right control-label col-form-label">Bucket Fee Per Player</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WDDRUpdatePriceViewModel.BucketFeePerPlayer, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "BucketFeePerPlayer" })
+                            </div>
+
+                        </div>
+
+                        <h3 class="box-title m-b-0 cart_font">Inclusive Convenience fee (Monday to Friday)</h3>
+                        <div class="form-group row">
+                            <label for="caddie" class="col-sm-4 text-right control-label col-form-label">Convenience Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WDDRUpdatePriceViewModel.ConvenienceFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "ConvenienceFee" })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="col-md-6 right">
+                    <div class="card card-body">
+                        <h3 class="box-title m-b-0 cart_font">Book Driving Range (Saturday to Sunday)</h3>
+                        <p class="text-muted m-b-30 font-13"></p>
+
+                        <div class="form-group row">
+                            <label for="Green Fee" class="col-sm-4 text-right control-label col-form-label">Range Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WEDRUpdatePriceViewModel.RangeFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="taxes" class="col-sm-4 text-right control-label col-form-label">Taxes And Fees</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WEDRUpdatePriceViewModel.TaxAndFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="Cart" class="col-sm-4 text-right control-label col-form-label">Bucket Fee Per Player</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WEDRUpdatePriceViewModel.BucketFeePerPlayer, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+
+                        </div>
+
+                        <h3 class="box-title m-b-0 cart_font">Inclusive Convenience fee (Saturday to Sunday)</h3>
+                        <div class="form-group row">
+                            <label for="caddie" class="col-sm-4 text-right control-label col-form-label">Convenience Fee</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.WEDRUpdatePriceViewModel.ConvenienceFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control", @placeholder = "GreenFee" })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>*@
+
+            </div>
+            <div style="text-align:center; padding-bottom:30px">
+                <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" style="background-color:#28a745" id="btnSubmit">Submit</button>
+                <div id="divMessage"></div>
+                <div id="divLoader" style="display:none">
+                    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+}
+
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- User Edits ends -->
+<!-- ============================================================== -->
+
+
+@section scripts{
+    <script src="~/Scripts/Custom/NationalHolidayPriceController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           // OnUpdatePricingReady();
+        });
+    </script>
+}

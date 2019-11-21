@@ -1,0 +1,115 @@
+﻿@model GolfCentraAdmin.ViewModel.BookingViewModel
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Reports</h3>
+
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                @using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnReportBegin", OnSuccess = "OnReportSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "Report/SearchByAdvanceSearch" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        @Html.HiddenFor(x => x.SearchTypeId, new { @id = "hdnSearchTypeId" })
+                        <div class="col-md-3">
+
+                            <form>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" onclick="SetSearchTypeId(1)" id="radioAll"> All
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" onclick="SetSearchTypeId(2)"> From APP
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optradio" onclick="SetSearchTypeId(3)"> On Spot |  Start Date
+                                </label>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="example">
+
+                                <div class="input-daterange input-group" id="date-range">
+                                    @Html.TextBoxFor(x => x.StartDate, new { @id = "txtStartDate", @autocomplete = "off", @class = "form-control", @placeholder = "Start Date", @name = "start" })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-info b-0 text-white">TO</span>
+                                    </div>
+                                    @Html.TextBoxFor(x => x.EndDate, new { @id = "txtEndDate", @autocomplete = "off", @class = "form-control", @placeholder = "End Date", @name = "End" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info" id="btnSubmit"><i class="fa fa-check"></i> Search </button>
+                            @*    <button type="button" class="btn btn-info"><i class="fa fa-check"></i> Export</button>*@
+                                <div></div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body" id="divSearchBooking">
+
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+
+</div>
+<!-- ============================================================== -->
+<!-- User Edits ends -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="bookingPopUp">
+
+</div>
+@section scripts{
+    <script src="~/Scripts/Custom/ReportController.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnReportReady();
+
+         
+            jQuery('#date-range').datepicker({
+                toggleActive: true,
+                autoclose: true,
+               
+            });
+            $('.input-daterange-datepicker').daterangepicker({
+                buttonClasses: ['btn', 'btn-sm'],
+                applyClass: 'btn-danger',
+                cancelClass: 'btn-inverse'
+            });
+
+        });
+    </script>
+}

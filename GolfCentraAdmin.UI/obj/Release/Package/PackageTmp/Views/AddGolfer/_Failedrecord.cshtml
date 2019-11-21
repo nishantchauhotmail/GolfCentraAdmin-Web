@@ -1,0 +1,58 @@
+﻿@model List<GolfCentraAdmin.ViewModel.GolferViewModel>
+
+
+@if (Model != null && Model.Count() != 0 && Model[0].Message != "Failed")
+{
+
+    <div class="table-responsive">
+        <table id="myTable" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Paswword</th>
+                    <th>Membership Id</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.Message == "Somthing Goes Wrong")
+                    {
+                        <tr>
+                            <td>Failed</td>
+                            <td>Failed</td>
+                            <td>Failed</td>
+                            <td>Failed</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>@item.ImportGolferExcelReportModel.Name</td>
+                            <td>@item.ImportGolferExcelReportModel.Password</td>
+                            <td>@item.ImportGolferExcelReportModel.MembershipId</td>
+                            <td>@item.ImportGolferExcelReportModel.Email</td>
+
+
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+else if (Model.Count() == 0 && Model[0].Message != "Failed")
+{
+
+    <h1>Success</h1>
+}
+else
+{
+
+    <h1>Failed</h1>
+}
+
+<a href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash\Dashboard\Index"><button>Go Back to website</button></a>

@@ -1,0 +1,83 @@
+﻿@model List<GolfCentraAdmin.ViewModel.BookingViewModel>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content popup_adj">
+        <div class="modal-header" style="padding-bottom:35px">
+            <h4 class="modal-title" id="myLargeModalLabel">Booking Information</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divGolferPopUp')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+                        <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+                            @if (Model != null)
+                            {
+                            <table class="table" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>User Name</th>
+                                        <th>Booking Date</th>
+                                        <th>Holes</th>
+                                        <th>Tee Off Date</th>
+                                        <th>Time</th>
+                                        <th>Booking Status</th>
+                                        <th>No of Player</th>
+                                        <th>Cart Fee</th>
+                                        <th>Caddie Fee</th>
+                                        <th>Green Fee</th>
+                                        <th>Range Fee</th>
+                                        <th>No.of Balls</th>
+                                        <th>Ball Fee</th>
+                                        <th>Discount</th>
+                                        <th>Amount</th>
+                                        <th>On Spot</th>
+                                           </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.BookingId</td>
+                                            <td>@item.UserName</td>
+                                            <td>@item.BookingDate.ToShortDateString() </td>
+                                            <td>@item.NoOfHole</td>
+                                            <td>@item.TeeOffDate</td>
+                                            <td>@item.Time</td>
+                                            <td>@item.BookingStatus</td>
+                                             <td>@item.NoOfPlayer</td>
+                                            <td>@item.CartFee</td>
+                                            <td>@item.CaddieFee</td>
+                                            <td>@item.GreenFee</td>
+                                            <td>@item.RangeFee</td>
+                                            <td>@item.NoOfBalls</td>
+                                            <td>@item.BallFee</td>
+                                            <td>@item.Discount</td>
+                                            <td>@item.CurrencyName.@item.TotalAmount</td>
+                                            <td>@item.OnSpot</td>
+                                           
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            }
+                            else
+                            {
+                                <div> No Record Exist</div>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

@@ -1,0 +1,120 @@
+﻿@model GolfCentraAdmin.ViewModel.PaymentGatewayControlViewModel
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" rel="stylesheet" />
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Add Payment Specify Information</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnPaymentControlAddBegin", OnSuccess = "OnPaymentControlAddSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "PaymentGatewayControl/SavePaymentGatewayControl" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body">
+                <form class="form-horizontal">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label"> Payment Gateway Enable</label>
+                        <div class="col-sm-6">
+                            @Html.CheckBoxFor(x => x.PaymentGatewayEnable, new { @id = "txtPaymentGatewayEnable",@onclick= "OnPaymentCheckBox()", @autocomplete = "off", @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div id="divPaymentCondition" style="display:none;">
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Green Fee Disable</label>
+                            <div class="col-sm-3">
+                                @Html.CheckBoxFor(x => x.GreenFee, new { @id = "txtCode", @autocomplete = "off", @class = "form-control", @placeholder = "" })
+
+                            </div>
+
+                            <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Cart Fee Disable</label>
+                            <div class="col-sm-3">
+                                @Html.CheckBoxFor(x => x.CartFee, new { @id = "txtAmount", @autocomplete = "off", @class = "form-control", @placeholder = "" })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Caddie Fee Disable</label>
+                            <div class="col-sm-3">
+                                @Html.CheckBoxFor(x => x.CaddieFee, new { @id = "txtCode", @autocomplete = "off", @class = "form-control", @placeholder = "Start Time" })
+
+                            </div>
+
+
+
+                            <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Equipment Price Off's</label>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("EquipmentIds", new SelectList(Model.EquipmentViewModels, "EquipmentId", "Name"), new { @class = "custom-select select2", @multiple = "multiple", @id = "ddlEquipment" })
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">All Member</label>
+                        <div class="col-sm-3">
+                            @Html.CheckBoxFor(x => x.AllMembers, new { @id = "txtAllMembers", @autocomplete = "off", @class = "form-control", @onclick = "OnAllMemberCheckBox()" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row" id="divSelectedGolferIds">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Selected Member's</label>
+                        <div class="col-sm-3">
+                            @Html.DropDownList("SelectedGolferIds", new SelectList(Model.GolferViewModels, "GolferId", "SelectBoxDisplay"), new { @class = "custom-select select2", @multiple = "multiple", @id = "txtSelectedGolferIds" })
+
+                            @*@Html.TextBoxFor(x => x.SelectedGolferIds, new { @id = "", @autocomplete = "off", @class = "form-control", @placeholder = "" })*@
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Submit</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.js"></script>
+    <script src="~/Scripts/Custom/PaymentGatewayControlController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "Select a Equpiment",
+
+
+            });
+            $('#txtSelectedGolferIds').select2({
+                placeholder: "Select a Golfer",
+
+
+            });
+
+            
+        });
+        
+    </script>
+}
+

@@ -1,0 +1,92 @@
+﻿@model GolfCentraAdmin.ViewModel.ScoreSearchViewModel
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Score Information</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnSearchScoreAddBegin", OnSuccess = "OnSearchScoreSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "ScoreManagement/GetScoreDetailByAdvanceSearch" }))
+{
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card card-body">
+
+                <form class="form-horizontal">
+
+@Html.AntiForgeryToken()
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label"> Name</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.GolferName, new { @id = "txtName", @autocomplete = "off", @class = "form-control", @placeholder = "Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">MemberShipId</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.MemberShipId, new { @id = "txtMemberShipId", @autocomplete = "off", @class = "form-control", @placeholder = "MemberShip Id" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Date</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Date, new { @id = "txtDate", @autocomplete = "off", @class = "form-control", @placeholder = "Date" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Course Pairing</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownList("CoursePairingId", new SelectList(Model.CoursePairingViewModels, "CoursePairingId", "CoursePairingName"), "Please Select A Course Pairing", new { @class = "custom-select", @id = "ddlCoursePairing", @autocomplete = "off" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Submit</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+<div class="row" id="divScoreTable">
+
+</div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="ScoreDetailsPopUp">
+
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Custom/ScoreManagementController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#txtDate').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true,
+               
+            }).datepicker("setDate", "0");
+           
+
+        });
+    </script>
+}

@@ -1,0 +1,94 @@
+﻿@model List<GolfCentraAdmin.ViewModel.GolferViewModel>
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">View Profile</h3>
+
+    </div>
+
+    @*<div class="col-md-7 align-self-center text-right d-none d-md-block">
+        <button type="button" class="btn btn-info" onclick="exportGolferDetail()"><i class="fa fa-plus-circle"></i> Export Profile Report</button>
+    </div>*@
+</div>
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>UserName</th>
+                                <th>EmailID</th>
+                                <th>Mobile Number</th>
+                                <th>Membership Number</th>
+                                <th>Userplatform</th>
+                                <th>Edit</th>
+                                <th>Update Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.GolferId</td>
+                                <td>@item.Name</td>
+                                <td>@item.EmailAddress</td>
+                                <td>@item.Mobile</td>
+
+                                <td>@item.ClubMemberId</td>
+                                <td>
+                                    @item.PlatformName
+                                </td>
+                                <td>
+                                    <a href="#divEditUserPopUp" data-toggle="modal" data-target="#divEditUserPopUp" onclick="userDetailsByUserId(@item.GolferId)"><div class="label label-table label-success">Edit</div></a>
+                                </td>
+                                <td id="divBlocked@(item.GolferId)">
+                                    @if (item.IsBlocked == true)
+                                    {
+                                        <a href="#divGolferPopUp" data-toggle="modal" data-target="#divGolferPopUp" onclick="UpdateUserStatusPopUP('@item.GolferId', 'false')"><div class="label label-table label-success">UnBlock</div></a>
+
+                                    }
+                                    else
+                                    { <a href="#divGolferPopUp" data-toggle="modal" data-target="#divGolferPopUp" onclick="UpdateUserStatusPopUP('@item.GolferId', 'true')"><div class="label label-table label-success">Block</div></a>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+
+</div>
+<!-- ============================================================== -->
+<!-- User Edits ends -->
+<!-- ============================================================== -->
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divEditUserPopUp"></div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divGolferPopUp"></div>
+
+@section scripts{
+<script src="~/Scripts/Custom/GolferProfileController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+    
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ]
+            });
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿
+@model List<GolfCentraAdmin.ViewModel.BucketTaxMappingViewModel>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content popup_adj">
+        <div class="modal-header" style="padding-bottom:35px">
+            <h4 class="modal-title" id="myLargeModalLabel">Tax Information</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divBucketPopUp')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+                        <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+                            @if (Model != null)
+                            {
+                                <table class="table" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th width="250px">Tax ID</th>
+                                            <th width="200px">Tax Name</th>
+                                            <th width="200px">Tax Percentage</th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td><a href="javascript:void(0)">@item.BucketId</a></td>
+                                                <td>@item.TaxName</td>
+                                                <td>@item.TaxPercentage</td>
+                                                <td class="text-center">
+                                                    @*<a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.MemberTypeId', '@item.Name','@item.ValueToShow')"><div class="label label-table label-success">Edit</div></a>*@
+                                                    <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.BucketId)"><div class="label label-table label-success">Delete</div></a>
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div> No Record Exist</div>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

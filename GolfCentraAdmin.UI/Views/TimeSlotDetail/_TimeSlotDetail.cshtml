@@ -1,0 +1,28 @@
+﻿@model List<GolfCentraAdmin.ViewModel.SlotViewModel>
+    <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+        <table class="table" style="width:80%">
+            <thead>
+                <tr>
+                    <th width="250px">Session Time ID</th>
+                    <th width="200px">Session Time</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderBy(x=>x.Time))
+                {
+                <tr>
+                    <td><a href="javascript:void(0)">@item.SlotId</a></td>
+                    <td>@item.Time</td>
+                    <td class="text-center">
+                        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.SlotId', '@item.Time')"><div class="label label-table label-success">Edit</div></a>
+                        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.SlotId)"><div class="label label-table label-success">Delete</div></a>
+                    </td>
+
+                </tr>
+                }
+        
+            </tbody>
+        </table>
+    </div>

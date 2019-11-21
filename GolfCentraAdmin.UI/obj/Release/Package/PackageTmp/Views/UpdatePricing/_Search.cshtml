@@ -1,0 +1,124 @@
+﻿@model List<GolfCentraAdmin.ViewModel.UpdatePriceViewModel>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+              @*  Member*@
+            </h4>
+
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Green Fee(18)	</th>
+                            <th>Taxes And Fees(18)</th>
+                            <th>Add On Cart(18)</th>
+                            <th>Add On Caddie(18)	</th>
+                            <th>RangeFee(18)</th>
+                            <th>Taxes(18)</th>
+                            <th>Bucket Fee(18)</th>
+                            <th>Convenience Fee BTT</th>
+                            <th>Convenience Fee BDR</th>
+                            <th>Member Type</th>
+                            <th>Slot Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.StartDate</td>
+                                <td>@item.EndDate</td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WDH27UpdatePriceViewModel.GreenFee}| @if (@item.WDH18UpdatePriceViewModel != null)
+                                    {@item.WDH18UpdatePriceViewModel.GreenFee}
+                                    Sat - Sun
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WEH27UpdatePriceViewModel.GreenFee}| @if (@item.WEH18UpdatePriceViewModel != null)
+                                    {@item.WEH18UpdatePriceViewModel.GreenFee}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WDH27UpdatePriceViewModel.TaxAndFee}| @if (@item.WDH18UpdatePriceViewModel != null)
+                                    {@item.WDH18UpdatePriceViewModel.TaxAndFee}
+                                    Sat - Sun
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WEH27UpdatePriceViewModel.TaxAndFee}| @if (@item.WEH18UpdatePriceViewModel != null)
+                                    {@item.WEH18UpdatePriceViewModel.TaxAndFee}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WDH27UpdatePriceViewModel.AddOnCart}| @if (@item.WDH18UpdatePriceViewModel != null)
+                                    {@item.WDH18UpdatePriceViewModel.AddOnCart}
+                                    Sat - Sun
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WEH27UpdatePriceViewModel.AddOnCart}| @if (@item.WEH18UpdatePriceViewModel != null)
+                                    {@item.WEH18UpdatePriceViewModel.AddOnCart}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WDH27UpdatePriceViewModel.AddOnCaddie}| @if (@item.WDH18UpdatePriceViewModel != null)
+                                    {@item.WDH18UpdatePriceViewModel.AddOnCaddie}
+                                    Sat - Sun
+                                    @if (@item.WDH27UpdatePriceViewModel != null)
+                                    {@item.WEH27UpdatePriceViewModel.AddOnCaddie}| @if (@item.WEH18UpdatePriceViewModel != null)
+                                    {@item.WEH18UpdatePriceViewModel.AddOnCaddie}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDDRUpdatePriceViewModel != null)
+                                    {@item.WDDRUpdatePriceViewModel.RangeFee}
+                                    Sat - Sun
+                                    @if (@item.WEDRUpdatePriceViewModel != null)
+                                    {@item.WEDRUpdatePriceViewModel.RangeFee}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDDRUpdatePriceViewModel != null)
+                                    {@item.WDDRUpdatePriceViewModel.TaxAndFee}
+                                    Sat - Sun
+                                    @if (@item.WEDRUpdatePriceViewModel != null)
+                                    {@item.WEDRUpdatePriceViewModel.TaxAndFee}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDDRUpdatePriceViewModel != null)
+                                    {@item.WDDRUpdatePriceViewModel.BucketFeePerPlayer}
+                                    Sat - Sun
+                                    @if (@item.WEDRUpdatePriceViewModel != null)
+                                    {@item.WEDRUpdatePriceViewModel.BucketFeePerPlayer}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDH18UpdatePriceViewModel != null)
+                                    {@item.WDH18UpdatePriceViewModel.ConvenienceFee}
+                                    Sat - Sun
+                                    @if (@item.WEH18UpdatePriceViewModel != null)
+                                    {@item.WEH18UpdatePriceViewModel.ConvenienceFee}
+                                </td>
+                                <td>
+                                    Mon-Fri
+                                    @if (@item.WDDRUpdatePriceViewModel != null)
+                                    {@item.WDDRUpdatePriceViewModel.ConvenienceFee}
+                                    Sat - Sun
+                                    @if (@item.WEDRUpdatePriceViewModel != null)
+                                    {@item.WEDRUpdatePriceViewModel.ConvenienceFee}
+                                </td>
+                                <td>@item.MemberType</td>
+                                <td>@item.SlotTime</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿
+@model GolfCentraAdmin.ViewModel.TaxManagementViewModel
+<div class="modal-dialog modal-lg">
+    <div class="modal-content popup_adj">
+        <div class="modal-header" style="padding-bottom:35px">
+            <h4 class="modal-title" id="myLargeModalLabel">Update Tax Type</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divTaxPopUp')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" id="txtNamePopUp" class="form-control" value="@Model.Name" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Percentage</label>
+                                        <input type="text" id="txtPercentagePopUp" class="form-control" value="@Model.Percentage" placeholder="Percentage" onkeypress = "return isDecimal(this,event)">
+                                    </div>
+
+
+
+                                    <button type="button" class="btn btn-success waves-effect waves-light m-r-10" id="btnSubmitPopUp" onclick="UpdateTaxType(@Model.TaxId)">Update</button>
+                                    <div id="divMessagePopUp"></div>
+                                    <div id="divLoaderPopUp" style="display:none">
+                                        <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

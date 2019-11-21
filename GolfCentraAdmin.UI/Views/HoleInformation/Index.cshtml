@@ -1,0 +1,50 @@
+﻿@model GolfCentraAdmin.ViewModel.HoleViewModel
+@{ var holeList = (TempData["HoleNumberList"] as List<@GolfCentraAdmin.ViewModel.HoleViewModel>);}
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Update Hole Information</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-md-7">
+        <div class="card card-body">
+            @using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnHoleInfoSaveBegin", OnSuccess = "OnHoleInfoSaveSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "HoleInformation/SaveHoleInformation" }))
+            {
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Hole No</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownList("HoleNumberId", new SelectList(holeList, "HoleNumberId", "HoleNumber"), "Please Select A Hole", new { @class = "custom-select", @id = "ddlHoleNumber", @autocomplete = "off" })
+                        </div>
+                    </div>
+                    <span id="divHoleInformation">
+
+                    </span>
+                </form>
+            }
+            </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+@section scripts{
+    <script src="~/Scripts/Custom/HoleInformationController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnHoleInformationReady();
+        });
+    </script>
+}

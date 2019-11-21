@@ -1,0 +1,149 @@
+﻿@model List<GolfCentraAdmin.ViewModel.SessionMasterViewModel>
+
+
+@{ var count1 = 0;}
+@foreach (var item in @Model)
+{
+    <div id="sessionId1@(count1)" style="display:none">@item.SessionId</div>
+    <h4 class="card-title" style="font-size:16px">
+        @item.SessionName ( @item.StartTime - @item.EndTime)
+
+        <a href="" data-toggle="modal" data-target=".extra" onclick="SetPopUpValue1(@count1)"> <button type="button" class="btn btn-info font_12"><i class="fa fa-plus-circle"></i> Add Timing</button></a>
+        @* <a href="Update-session-price-time.html"> <button type="button" class="btn btn-info font_12"><i class="fa fa-plus-circle"></i> Edit Session Price</button></a>*@
+    </h4>
+    var slotTiming = "";
+    var count = 0;
+    foreach (var slot in item.SlotTime)
+    {
+        if (count == 0)
+        {
+            slotTiming = slot.ToString("hh':'mm");
+        }
+        slotTiming = slotTiming + "," + slot.ToString("hh':'mm");
+        count++;
+    }
+
+    <div class="tags-default">
+        <input type="text" value="@slotTiming" data-role="tagsinput" id="txtSession1@(count1)" class="removeTime" placeholder="add tags" />
+    </div>
+    count1++;
+}
+<button onclick="OnDrivingRangeSave(@count1)" class="btn btn-info">Save</button>
+<div id="divMessageDrivingRange"></div>
+<div class="modal fade bs-example-modal-lg-2 extra" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style="display:none" id="popUpCount1"></div>
+                <h4 class="modal-title" id="myLargeModalLabel">Add Session Time</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @{ var eslotTiming = "";
+                                var ecount = 0;
+                                foreach (var slot in Model[0].ExtraSlotTime)
+                                {
+                                    if (ecount == 0)
+                                    {
+                                        eslotTiming = slot.ToString("hh':'mm");
+                                    }
+                                    eslotTiming = eslotTiming + "," + slot.ToString("hh':'mm");
+                                    ecount++;
+                                }
+                            }
+                            <div class="tags-default">
+                                <input type="text" value="@eslotTiming" data-role="tagsinput" placeholder="add tags" id="divpopUpText1" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').tagsinput('refresh');
+       $('input').prop("readonly", true);
+        $(".removeTime").on('itemRemoved', function (event) {
+            // event.item: contains the item
+            // alert(event.item)
+            $('#divpopUpText1').tagsinput('add', event.item);
+        });
+        $("#divpopUpText1").on('itemRemoved', function (event) {
+            // event.item: contains the item
+            // alert(event.item)
+            var count = $("#popUpCount1").html();
+
+            $('#txtSession1' + count.toString()).tagsinput('add', event.item);
+        });
+    });
+
+    function SetPopUpValue1(value) {
+        $("#popUpCount1").html(value);
+
+    }
+
+    function OnDrivingRangeSave(count) {
+        var sessionMasterViewModels = [];
+        for (var i = 0; i < count; i++) {
+            var sessionId = $("#sessionId1" + i.toString()).html();
+            var timeSpan = $("#txtSession1" + i.toString()).val();
+            var values =
+                {
+                    "SessionId": sessionId,
+                    "TeeTimeSlot": timeSpan
+                }
+            sessionMasterViewModels.push(values);
+        }
+
+        var url = GetDomain(_DOMAINDIVID) + "SessionMaster/SaveDrivingRange";
+        
+        SetHtml("divMessageDrivingRange", "Please Wait..");
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: JSON.stringify(sessionMasterViewModels),
+            contentType: 'application/json',
+
+            success: function (data) {
+
+                data = eval(data);
+
+                HideLoader(_LOADERDIVID);
+                switch (data.code) {
+                    case 0:
+                        SetHtml("divMessageDrivingRange", "Update Successfully");
+                        break;
+                    case -1:
+                        SetHtml("divMessageDrivingRange", data.message);
+
+                        break;
+                    case -2:
+                        SetHtml("divMessageDrivingRange", "SomeThing Goes Wrong");
+
+                        break;
+                    case -99:
+                        LogoutOperation();
+                        break;
+                }
+            },
+            error: function () {
+                $('#divMessageDrivingRange').html('<p>An Error Has Occurred</p>');
+            }
+        });
+
+
+
+    }
+</script>

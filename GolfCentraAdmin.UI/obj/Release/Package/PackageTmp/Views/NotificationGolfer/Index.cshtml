@@ -1,0 +1,65 @@
+﻿@model GolfCentraAdmin.ViewModel.NotificationGolferViewModel
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Golfer Notification </h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnGolferNotificationAddBegin", OnSuccess = "OnGolferNotificationSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "NotificationGolfer/SaveGolferNotification" }))
+{
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card card-body">
+
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Title</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Title, new { @id = "txtTitle", @autocomplete = "off", @class = "form-control", @placeholder = "Title" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Message</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Message, new { @id = "txtMessage", @autocomplete = "off", @class = "form-control", @placeholder = "Message" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Submit</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<!-- ============================================================== -->
+<!-- User Edits -->
+<!-- ============================================================== -->
+<div class="row" id="divNotificationTable">
+
+</div>
+@section scripts{
+    <script src="~/Scripts/Custom/NotificationGolfer.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnGolferNotificationReady();
+        });
+    </script>
+}

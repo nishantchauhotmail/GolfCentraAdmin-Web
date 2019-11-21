@@ -1,0 +1,152 @@
+﻿@model List<GolfCentraAdmin.ViewModel.SessionMasterViewModel>
+@*@{ Layout = "~/Views/Shared/_PartialLayoutPage.cshtml";}*@
+
+@{ var count1 = 0;}
+@foreach (var item in @Model)
+{
+    var slotTiming = "";
+    var count = 0;
+    <h4 class="card-title" style="font-size:16px">
+        @item.SessionName ( @item.StartTime - @item.EndTime )
+        <div id="sessionId@(count1)" style="display:none">@item.SessionId</div>
+        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg-2" onclick="SetPopUpValue(@count1)"> <button type="button" class="btn btn-info font_12"><i class="fa fa-plus-circle"></i> Add Timing</button></a>
+         </h4>
+
+    foreach (var slot in item.SlotTime.OrderBy(x=>x.Ticks))
+    {
+        if (count == 0)
+        {
+            slotTiming = slot.ToString("hh':'mm");
+        }
+        slotTiming = slotTiming + "," + slot.ToString("hh':'mm");
+        count++;
+    }
+
+    <div class="tags-default">
+        @*  @Html.TextBoxFor(x=>x[count1].TeeTimeSlot,new  { @placeholder="", @class = "removeTime", @value = slotTiming })*@
+        <input type="text" value="@slotTiming" data-role="tagsinput" id="txtSession@(count1)" class="removeTime" />
+    </div>
+    count1++;
+}
+<button onclick="OnTeeTimeSave(@count1)" class="btn btn-info">Save</button>
+<div id="divMessageTeeTime"></div>
+<div class="modal fade bs-example-modal-lg-2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Add Session Time</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div style="display:none" id="popUpCount"></div>
+            <div class="modal-body">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @{ var eslotTiming = "";
+                                var ecount = 0;
+                                foreach (var slot in Model[0].ExtraSlotTime.OrderBy(x => x.Ticks))
+                                {
+                                    if (ecount == 0)
+                                    {
+                                        eslotTiming = slot.ToString("hh':'mm");
+                                    }
+                                    eslotTiming = eslotTiming + "," + slot.ToString("hh':'mm");
+                                    ecount++;
+                                }
+                            }
+                            <div class="tags-default">
+                                <input type="text" value="@eslotTiming" data-role="tagsinput" placeholder="add tags" id="divpopUpText" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').tagsinput('refresh');
+         $('input').prop("readonly", true);
+
+
+        $(".removeTime").on('itemRemoved', function (event) {
+            // event.item: contains the item
+            // alert(event.item)
+            $('#divpopUpText').tagsinput('add', event.item);
+        });
+        $("#divpopUpText").on('itemRemoved', function (event) {
+            // event.item: contains the item
+            // alert(event.item)
+            var count = $("#popUpCount").html();
+
+            $('#txtSession' + count.toString()).tagsinput('add', event.item);
+        });
+    });
+
+    function SetPopUpValue(value) {
+        $("#popUpCount").html(value);
+
+    }
+
+    function OnTeeTimeSave(count) {
+        var sessionMasterViewModels = [];
+        for (var i = 0; i < count; i++) {
+            var sessionId = $("#sessionId" + i.toString()).html();
+            var timeSpan = $("#txtSession" + i.toString()).val();
+            var values =
+                {
+                    "SessionId": sessionId,
+                    "TeeTimeSlot": timeSpan
+                }
+            sessionMasterViewModels.push(values);
+        }
+        SetHtml("divMessageTeeTime", "Please Wait...");
+        var url = GetDomain(_DOMAINDIVID) + "SessionMaster/SaveTeeTime";
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: JSON.stringify(sessionMasterViewModels),
+            contentType: 'application/json',
+
+            success: function (data) {
+
+                data = eval(data);
+
+                HideLoader(_LOADERDIVID);
+                switch (data.code) {
+                    case 0:
+                        SetHtml("divMessageTeeTime", "Update Successfully");
+                        break;
+                    case -1:
+                        SetHtml("divMessageTeeTime", data.message);
+
+                        break;
+                    case -2:
+                        SetHtml("divMessageTeeTime", "SomeThing Goes Wrong");
+
+                        break;
+                    case -99:
+                        LogoutOperation();
+                        break;
+                }
+            },
+            error: function () {
+                $('#divMessageTeeTime').html('<p>An Error Has Occurred</p>');
+            }
+        });
+
+
+
+    }
+</script>
+

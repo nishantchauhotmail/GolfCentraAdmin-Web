@@ -1,0 +1,73 @@
+﻿@model GolfCentraAdmin.ViewModel.GolferViewModel
+
+@*@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnUploadGolferAttachmentBegin", OnSuccess = "OnUploadGolferAttachmentSuccess", Url = GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "AddGolfer/ImportGolferExcel" }))
+    {*@
+
+@using (Html.BeginForm("ImportGolferExcel", "AddGolfer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row page-titles">
+        <div class="col-md-5 align-self-center">
+            <h3 class="text-themecolor">Upload Golfer Excel</h3>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card card-body">
+
+                <form class="form-horizontal">
+
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Excel File</label>
+                        <div class="col-sm-9">
+                            @Html.TextBox("Attachment", null, new { type = "file", @class = "input-file" })
+
+                        </div>
+                    </div>
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Upload</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+    <div class="panel panel-default contactaddress-cover pull-left text-left small-padding">
+        <div class="postscore-cover">
+            Please Download the Excel Sheet Format,<br />
+            Fill the Golfer in and then Upload it.<br /><br />
+            <div class="postscore-hd text-center pull-left">
+                <button type="button" style="text-align:left" class="btn btn-primary small-margin" id="DownloadButton" onclick="DownloadFileNew();">Download File  <i class="fa fa-download" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="divResult" style="display: none;"></div>
+}
+<script type="text/javascript">
+
+    function DownloadFileNew() {
+
+        $('#DownloadButton').click(function () {
+            //var filepath = $(this).attr('hdnAttachment');
+            var filepath = GetDomain(_DOMAINDIVID) + 'Uploads/Golfer Data.xlsx';
+            location.href = filepath;
+
+            //var filepath = $(this).attr('hdnAttachment');
+            //var form = $('<form>').attr('action', filepath);
+            //form.submit();
+        });
+    };
+</script>
+

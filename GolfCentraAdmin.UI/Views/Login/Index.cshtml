@@ -1,0 +1,107 @@
+﻿@{ Layout = null;}
+@model GolfCentraAdmin.ViewModel.EmployeeViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl/Theme/images/favicon.png">
+    <title>@GolfCentraAdmin.UI.Common.Constants.Name.AppName-Log In</title>
+    <!-- Bootstrap Core CSS -->
+    @Styles.Render("~/Content/css")
+    <link href="~/Theme/css/pages/login-register-lock.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="card-no-border">
+    <div id="divDomain" style="display: none">@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl</div>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">@GolfCentraAdmin.UI.Common.Constants.Name.AppName</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    @using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnLoginBegin", OnSuccess = "OnLoginSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "Login/DoLogin" }))
+    {
+        @Html.AntiForgeryToken()
+        <section id="wrapper">
+            <div class="login-register" style="background-image:url(@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl/Theme/images/background/login-register1.jpg);">
+                <div class="login-box card">
+                    <div class="card-body boxing">
+                        <form class="form-horizontal form-material" >
+                            <div style="text-align:center; border-bottom:2px solid #eee;">  <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl/Theme/images/logo.jpg" style="margin-bottom:20px;"  alt="logo" /></div>
+                            <h3 class="box-title m-b-20" style="font-size:15px; text-align:center; margin-top:20px">Enter Your Login Details</h3>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    @Html.TextBoxFor(x => x.EmailId, new { @id = "txtUserName", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    @Html.PasswordFor(x => x.Password, new { @id = "txtPassword", @autocomplete = "off", @class = "form-control", @placeholder = "Password" })
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-20">
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit" id="btnSubmit">Sign In</button>
+                                    <div id="divMessage"></div>
+                                    <div id="divLoader" style="display:none">
+                                        <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    @Scripts.Render("~/bundles/js")
+    <!--Custom JavaScript -->
+    <script src="~/Scripts/Custom/LoginController.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".preloader").fadeOut();
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        // ==============================================================
+        // Login and Recover Password
+        // ==============================================================
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+﻿@model GolfCentraAdmin.ViewModel.PromotionViewModel
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.css" rel="stylesheet" />
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Promotion Information</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnPromotionAddBegin", OnSuccess = "OnPromotionAddSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "Promotion/SavePromotion" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body">
+
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label"> Name</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(x => x.Name, new { @id = "txtName", @autocomplete = "off", @class = "form-control", @placeholder = "Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row input-daterange" id="date-range">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Start Date</label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(x => x.StartDate, new { @id = "txtStartDate", @autocomplete = "off", @class = "form-control", @placeholder = "" })
+
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">End Date</label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(x => x.EndDate, new { @id = "txtEndDate", @autocomplete = "off", @class = "form-control", @placeholder = "" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Start Time</label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(x => x.StartTime, new { @id = "txtStartTime", @autocomplete = "off", @class = "form-control", @placeholder = "Start Time" })
+
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">End Time</label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(x => x.EndTime, new { @id = "txtEndTime", @autocomplete = "off", @class = "form-control", @placeholder = "End Time" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row fc-center">Inclusion</div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Hole Type</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownList("HoleTypeId", new[]{
+                        new SelectListItem(){ Text = "9", Value = "1"},
+                        new SelectListItem(){ Text = "18", Value = "2"}
+                         
+                       }, new { @class = "form-control custom-select", @id = "ddlHoleType", @autocomplete = "off" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Green Fee</label>
+                        <div class="col-sm-3">
+                            @Html.CheckBoxFor(x => x.GreenFee, new { @id = "txtGreenFee", @autocomplete = "off", @class = "form-control" })
+
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Caddie Fee</label>
+                        <div class="col-sm-3">
+                            @Html.CheckBoxFor(x => x.CaddieFee, new { @id = "txtCaddieFee", @autocomplete = "off", @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Cart Fee</label>
+                        <div class="col-sm-3">
+                            @Html.CheckBoxFor(x => x.CartFee, new { @id = "txtCartFee", @autocomplete = "off", @class = "form-control" })
+
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Remark</label>
+                        <div class="col-sm-3">
+                            @Html.TextAreaFor(x => x.Extra, new { @id = "txtExtra", @autocomplete = "off", @class = "form-control", @placeholder = "Remark" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Price</label>
+                        <div class="col-sm-3">
+
+                            @Html.TextBoxFor(x => x.Price, new { @id = "txtAmount", @autocomplete = "off", @class = "form-control", @placeholder = "Price" })
+
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Taxes</label>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.DropDownList("Taxs", new SelectList(Model.TaxManagementViewModels, "TaxId", "Name"), new { @class = "custom-select select2", @multiple = "multiple", @id = "ddlTax" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <label for="inputEmail3" class="col-sm-2 text-right control-label col-form-label">Equipment</label>
+                        <div class="col-sm-3">
+                            @Html.DropDownList("EquipmentIds", new SelectList(Model.EquipmentViewModel, "EquipmentId", "Name"), new { @class = "custom-select select2", @multiple = "multiple", @id = "ddlEquipment" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Submit</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.js"></script>
+
+    <script src="~/Scripts/Custom/PromotionController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ddlTax').select2({
+                placeholder: "Select a Tax",
+
+
+            });
+
+            $('#ddlEquipment').select2({
+                placeholder: "Select a Equipment",
+
+
+            });
+
+            jQuery('#date-range').datepicker({
+                toggleActive: true,
+                autoclose: true,
+                startDate: new Date(),
+            });
+            jQuery('#txtStartDate').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true,
+                startDate: new Date(),
+
+            }).datepicker("setDate", "0");
+            jQuery('#txtEndDate').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                toggleActive: true,
+                startDate: new Date(),
+
+            }).datepicker("setDate", "0");
+
+            $('.input-daterange-datepicker').daterangepicker({
+                buttonClasses: ['btn', 'btn-sm'],
+                applyClass: 'btn-danger',
+                cancelClass: 'btn-inverse'
+            });
+
+            $('#txtStartTime').clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                autoclose: true,
+                'default': 'now'
+            });
+
+            $('#txtEndTime').clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                autoclose: true,
+                'default': 'now'
+            });
+
+            $("#txtEndTime").change(function () {
+                $('#divMessage').html('');
+                var startTime = $("#txtStartTime").val();
+                var endTime = $("#txtEndTime").val();
+               
+                if (startTime > endTime) {
+                    
+                    $('#divMessage').html('End time should be greater');
+                    $("#txtEndTime").val('').clockpicker("refresh");
+                }
+            });
+            $("#txtStartTime").change(function () {
+                $('#divMessage').html('');
+                $("#txtEndTime").val('').clockpicker("refresh");
+            });
+        });
+    </script>
+}
+

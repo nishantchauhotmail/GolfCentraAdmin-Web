@@ -1,0 +1,48 @@
+﻿@model List<GolfCentraAdmin.ViewModel.ReportingViewModel>
+<table id="myTable" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Booking Date</th>
+            <th>TeeOff Date</th>
+            <th>Time</th>
+            <th>Booking Status</th>
+            <th>Course</th>
+            <th>Players</th>
+            <th>Green Fee</th>
+            <th>Total</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.BookingId</td>
+            <td>@item.BookingDate.ToShortDateString()</td>
+            <td>@item.TeeOffDate</td>
+            <td>@item.Time</td>
+            <td>@item.BookingStatus</td>
+            <td>@item.CoursePairingName</td>
+            <td>@item.NoOfPlayer</td>
+            <td>@item.GreenFee</td>
+            <td>@item.Total</td>
+            <td><a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="GetBookingDetailsById(@item.BookingId)">View</a></td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel'
+            ]
+        });
+    });
+</script>
+

@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl/Theme/images/favicon.png">
+    <title>@GolfCentraAdmin.UI.Common.Constants.Name.AppName</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Theme/scss/icons/flag-icon-css/flag-icon.min.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/iconmind/iconmind.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/material-design-iconic-font/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/themify-icons/themify-icons.css" rel="stylesheet" />
+    <link href="~/Theme/scss/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet" />
+    @*<link href="~/Theme/css/icons/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/Theme/css/icons/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
+        <link href="~/Theme/css/icons/themify-icons/themify-icons.css" rel="stylesheet" />*@
+    <link href="~/Theme/css/pages/icon-page.css" rel="stylesheet" />
+    <link href="~/Theme/css/pages/pricing-page.css" rel="stylesheet" />
+    <!-- Dashboard 1 Page CSS -->
+    <link href="~/Theme/css/pages/dashboard1.css" rel="stylesheet">
+    <!-- You can change the theme colors from here
+    <link href="css/colors/default.css" id="theme" rel="stylesheet">-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+<body class="fix-header fix-sidebar card-no-border">
+    <div id="divDomain" style="display: none">@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl</div>
+
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">@GolfCentraAdmin.UI.Common.Constants.Name.AppName</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar adjnabvar">
+            @Html.Partial("_Header")
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            @Html.Partial("_SideBar")
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+
+                @RenderBody()
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer"> © 2018 @GolfCentraAdmin.UI.Common.Constants.Name.AppName</footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+
+    @Scripts.Render("~/bundles/js")
+    @RenderSection("scripts", required: false)
+
+
+
+    <!-- Chart JS -->
+    @*<script src="~/Theme/js/dashboard1.js"></script>*@
+
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script>
+        //$(function () {
+          
+        //    var table = $('#example').DataTable({
+        //        "columnDefs": [{
+        //            "visible": false,
+        //            "targets": 2
+        //        }],
+        //        "order": [
+        //            [2, 'asc']
+        //        ],
+        //        "displayLength": 25,
+        //        "drawCallback": function (settings) {
+        //            var api = this.api();
+        //            var rows = api.rows({
+        //                page: 'current'
+        //            }).nodes();
+        //            var last = null;
+        //            api.column(2, {
+        //                page: 'current'
+        //            }).data().each(function (group, i) {
+        //                if (last !== group) {
+        //                    $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+        //                    last = group;
+        //                }
+        //            });
+        //        }
+        //    });
+        //    // Order by the grouping
+        //    $('#example tbody').on('click', 'tr.group', function () {
+        //        var currentOrder = table.order()[0];
+        //        if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+        //            table.order([2, 'desc']).draw();
+        //        } else {
+        //            table.order([2, 'asc']).draw();
+        //        }
+        //    });
+
+        //});
+    
+    </script>
+    <!-- ============================================================== -->
+
+</body>
+</html>

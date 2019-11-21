@@ -1,0 +1,38 @@
+﻿@{var menuList = (List<GolfCentraAdmin.ViewModel.PageViewModel>)Session["NavigationMenu"];}
+<div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+        <ul id="sidebarnav">
+            @*<li class="nav-small-cap"></li>*@
+
+            @foreach (var item in menuList.Where(x => x.ParentId == 0).OrderBy(x => x.Ordering))
+            {
+                var childCount = menuList.Where(x => x.ParentId == item.PageId).Count();
+                if (childCount == 0)
+                {
+                    <li>
+                        <a class=" waves-effect waves-dark" href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/@item.ControllerName/@item.ActionName" aria-expanded="false"><i class="@item.Icon"></i><span class="hide-menu">@item.PageName </span></a>
+                    </li>
+
+                }
+                else
+                {
+                    <li>
+                        <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="icon-Car-Wheel"></i><span class="hide-menu">@item.PageName </span></a>
+                     
+                        <ul aria-expanded="false" class="collapse">
+                            @foreach (var ch in menuList.Where(x => x.ParentId == item.PageId).OrderBy(x => x.Ordering))
+                            {
+                                <li><a href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/@ch.ControllerName/@ch.ActionName">@ch.PageName </a></li>                              
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+
+    <div id="actionName" style="display:none">@this.ViewContext.RouteData.Values["action"]</div>
+    <div id="controllerName" style="display:none">@this.ViewContext.RouteData.Values["controller"]</div>

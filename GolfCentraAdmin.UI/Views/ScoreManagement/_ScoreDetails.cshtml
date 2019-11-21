@@ -1,0 +1,146 @@
+﻿@model List<GolfCentraAdmin.ViewModel.ScoreDetailsViewModel>
+<!-- Column -->
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body" >
+            <h4 class="card-title">Score Details</h4>
+
+            <div class="table-responsive m-t-40">
+                <table id="myTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Score ID</th>
+                            <th>User Name</th>
+                            <th>Membership Id</th>
+                            <th>Date Of Play</th>
+                            <th>Time</th>
+                            <th>Course Name</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model)
+                        {
+                            <tr>
+                                <td>@item.ScoreId</td>
+                                <td>@item.UserName</td>
+                                <td>@item.MemberShipId</td>
+                                <td>
+                                    @item.DateOfPlay.ToShortDateString()
+                                </td>
+                                <td>@item.PlayTime</td>
+                                <td>@item.CoursePairingName</td>
+                                <td>
+                                    <a href="" data-toggle="modal" data-target="#eq@(item.ScoreId)"><div class="label label-table label-success">Score Details</div></a>
+                                    <div class="modal fade " tabindex="-1" id="eq@(item.ScoreId)" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content popup_adj">
+                                                <div class="modal-header" style="padding-bottom:35px">
+                                                    <h4 class="modal-title" id="myLargeModalLabel">Score Information</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+
+                                                        <div class="col-md-12" id="div@(item.ScoreId)">
+                                                            <div class="card card-body">
+                                                                <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+                                                                    @if (item.ScoreViewModels != null)
+                                                                    {
+                                                                        if (item.ScoreViewModels.Count() != 0)
+                                                                        {
+                                                                            <table class="table" style="width:80%">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th width="200px">Hole Number</th>
+                                                                                        <th width="200px">Par</th>
+                                                                                        <th width="200px">Stroke</th>
+                                                                                        <th width="200px">Course Name</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach (var item1 in item.ScoreViewModels)
+                                                                                    {
+                                                                                        <tr>
+                                                                                            <td>@item1.HoleNumber</td>
+                                                                                            <td>@item1.Par</td>
+                                                                                            <td>@item1.Storkes</td>
+                                                                                            <td>@item1.HoleName</td>
+                                                                                        </tr>
+                                                                                    }
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div> No Record Exist</div>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div> No Record Exist</div>
+                                                                    }
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div>
+                                                        <button type="button" value="Print" onclick="PrintElem('#div@(item.ScoreId)')" style="width: 20%; margin: 15px 0;">PRINT <i class="fa fa-print" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/ScoreManagement/editscore?scoreid=@(item.ScoreId)"><div class="label label-table label-success">Edit Score</div></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+        </div>
+    </div>
+</div>
+<!-- Column -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel'
+            ]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+    function Popup(data) {
+        var mywindow = window.open('', 'my div', 'height=1002,width=680');
+        mywindow.document.write('<html><head><title>my div</title>');
+        @*  /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="@IGUNHS.COM.Components.Constants.Url.WebSiteUrlWithoutSlash/css/style.css" type="text/css" />');
+        mywindow.document.write('<link rel="stylesheet" href="@IGUNHS.COM.Components.Constants.Url.WebSiteUrlWithoutSlash/css/bootstrap.css" type="text/css" />');*@
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+</script>
+

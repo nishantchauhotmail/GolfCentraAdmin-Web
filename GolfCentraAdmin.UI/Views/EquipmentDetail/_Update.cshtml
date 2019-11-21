@@ -1,0 +1,75 @@
+﻿
+@model GolfCentraAdmin.ViewModel.EquipmentViewModel
+@{ var taxList = (TempData["taxList"] as List<@GolfCentraAdmin.ViewModel.TaxManagementViewModel>);}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content popup_adj">
+        <div class="modal-header" style="padding-bottom:35px">
+            <h4 class="modal-title" id="myLargeModalLabel">Update Equipment Type</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="CloseModalPopup('divEquipmentPopUp')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card card-body">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" id="txtNamePopUp" class="form-control" value="@Model.Name" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Price</label>
+                                        <input type="text" id="txtPricePopUp" class="form-control" value="@Model.Price" placeholder="Price" onkeypress = "return isDecimal(this,event)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Tax</label>
+                                        @{ var ints = Model.Taxs;
+                                            var stringsArray = ints.Select(i => i.ToString()).ToArray();
+                                            var values = string.Join(",", stringsArray);
+                                        }
+                                        <div id="hdnTax" style="display:none">@values</div>
+                                        @Html.DropDownList("Taxs", new SelectList(Model.TaxManagementViewModels, "TaxId", "Name"), new { @class = "custom-select select2", @multiple = "multiple", @id = "ddlTax1", @autocomplete = "off", @value = Model.Taxs })
+
+                                        @*<input type="text" id="txtTaxsPopUp" class="form-control" value="@Model.Taxs" placeholder="Tax">*@
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Description</label>
+                                        <input type="text" id="txtDescriptionPopUp" class="form-control" value="@Model.Description" placeholder="Description">
+                                    </div>
+
+
+
+                                    <button type="button" class="btn btn-success waves-effect waves-light m-r-10" id="btnSubmitPopUp" onclick="UpdateEquipmentType(@Model.EquipmentId)">Update</button>
+                                    <div id="divMessagePopUp"></div>
+                                    <div id="divLoaderPopUp" style="display:none">
+                                        <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        try {
+            $('.select2').select2({
+                placeholder: "Select a Tax",
+            });
+        } catch (e) {
+            
+        }
+
+    });
+</script>

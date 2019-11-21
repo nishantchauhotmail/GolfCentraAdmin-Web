@@ -1,0 +1,199 @@
+﻿@model GolfCentraAdmin.ViewModel.ScoreSearchViewModel
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Scorecard</h3>
+
+    </div>
+    <div class="col-md-7 align-self-center text-right d-none d-md-block">
+       @* <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"></i> Export Excel Report</button>*@
+       @* <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"></i> Export PDF Report</button>*@
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+
+    <!-- Column -->
+    <div class="col-lg-12 col-xlg-9 col-md-12">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item" onclick="SetTabValue()"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">By Email and Date</a> </li>
+                <li class="nav-item" onclick="SetTabValue()"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">By Date</a> </li>
+                <li class="nav-item" onclick="SetTabValue()"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">By Date Range </a> </li>
+                <li class="nav-item" onclick="SetTabValue()"> <a class="nav-link" data-toggle="tab" href="#homee" role="tab">By Multiple Email</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body">
+
+                        <form class="form-horizontal">
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtEmail", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Date</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(x => x.Date, new { @id = "txtDate", @autocomplete = "off", @class = "form-control", @placeholder = "Date" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <div class="offset-sm-3 col-sm-9">
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-t-10" onclick="SearchScore(2)">Submit</button>
+                                    <div style="display:none" id="divMessage"></div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!--second tab-->
+                <div class="tab-pane" id="profile" role="tabpanel">
+                    <div class="card-body">
+                        <form class="form-horizontal">
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Date</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(x => x.Date, new { @id = "txtSDate", @autocomplete = "off", @class = "form-control", @placeholder = "Date"})
+                                </div>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <div class="offset-sm-3 col-sm-9">
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-t-10" onclick="SearchScore(1)">Submit</button>
+                                    <div style="display:none" id="divMessage1"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane" id="settings" role="tabpanel">
+                    <div class="card-body">
+                        <form class="form-horizontal input-daterange" id="date-range">
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">From Date</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(x => x.StartDate, new { @id = "txtStartDate", @autocomplete = "off", @class = "form-control", @placeholder = "Start Date" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">To Date</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(x => x.EndDate, new { @id = "txtEndDate", @autocomplete = "off", @class = "form-control", @placeholder = "End Date" })
+                                </div>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <div class="offset-sm-3 col-sm-9">
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-t-10" onclick="SearchScore(3)">Submit</button>
+                                    <div style="display:none" id="divMessage2"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane" id="homee" role="tabpanel">
+                    <div class="card-body">
+
+                        <form class="form-horizontal">
+                            <div style="display:none" id="emailCount">0</div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtArrayEmail", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                                <div class="col-sm-7" style="display:none" id="divEmail1">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtArrayEmail1", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                                <div class="col-sm-7" style="display:none" id="divEmail2">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtArrayEmail2", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                                <div class="col-sm-7" style="display:none" id="divEmail3">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtArrayEmail3", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                                <div class="col-sm-7" style="display:none" id="divEmail4">
+                                    @Html.TextBoxFor(x => x.Email, new { @id = "txtArrayEmail4", @autocomplete = "off", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                                <div class="col-sm-2" id="btnAddMore">
+            <a href="javascript:void(0)" onclick="AddMoreOption()">Add More</a>
+        </div>
+                            </div>
+
+
+                            <div class="form-group m-b-0">
+                                <div class="offset-sm-3 col-sm-9">
+                                    <button type="button" class="btn btn-info waves-effect waves-light m-t-10" onclick="SearchScore(4)">Submit</button>
+                                    <div style="display:none" id="divMessage"></div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+<!-- Row -->
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Table Project -->
+<!-- ============================================================== -->
+<div class="row" id="divScoreTable">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+
+
+@section scripts{
+    <script src="~/Scripts/Custom/ScoreDetailController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            jQuery('#txtSDate').datepicker({
+                toggleActive: true,
+                autoclose: true,
+                
+            });
+            jQuery('#txtDate').datepicker({
+                toggleActive: true,
+                autoclose: true,
+                
+            });
+            jQuery('#date-range').datepicker({
+                toggleActive: true,
+                autoclose: true,
+              
+            });
+            $('.input-daterange-datepicker').daterangepicker({
+                buttonClasses: ['btn', 'btn-sm'],
+                applyClass: 'btn-danger',
+                cancelClass: 'btn-inverse'
+            });
+
+        });
+    </script>
+
+}

@@ -1,0 +1,35 @@
+﻿@model List<GolfCentraAdmin.ViewModel.MemberTypeViewModel>
+<div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+    <table class="table" style="width:80%">
+        <thead>
+            <tr>
+                <th width="250px">Member Type ID</th>
+                <th width="200px">Member Type Name</th>
+                <th width="200px">Value To Show</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="javascript:void(0)">@item.MemberTypeId</a></td>
+                    <td>@item.Name</td>
+                    <td>@item.ValueToShow</td>
+                    @if (item.MemberTypeId != 1 && item.MemberTypeId != 2)
+                    {
+                        <td class="text-center">
+                            <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.MemberTypeId', '@item.Name.Replace("'","^").ToString()','@item.ValueToShow.Replace("'","^").ToString()')"><div class="label label-table label-success">Edit</div></a>
+                        </td>
+                        <td>
+                            <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.MemberTypeId)"><div class="label label-table label-success">Delete</div></a>
+                        </td>
+                    }
+                </tr>
+             
+            }
+
+        </tbody>
+    </table>
+</div>

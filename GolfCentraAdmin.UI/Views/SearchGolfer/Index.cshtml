@@ -1,0 +1,165 @@
+﻿@model GolfCentraAdmin.ViewModel.GolferViewModel
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" rel="stylesheet" /> <!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Search Golfer</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnGolferSearchBegin", OnSuccess = "OngolferSearchSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "SearchGolfer/GetGolferByAdvanceSearch" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <!-- Column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-body">
+
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.Name, new { @id = "txtFirstName", @class = "form-control", @placeholder = "FirstName" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.LastName, new { @id = "txtLastName", @class = "form-control", @placeholder = "LastName" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Mobile Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.Mobile, new { @id = "txtMobileNo", @class = "form-control", @placeholder = "MobileNo" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Gender</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("GenderTypeId", new SelectList(Model.GenderTypeViewModels, "GenderTypeId", "Value"), "Please Select A Gender Type", new { @class = "custom-select", @id = "ddlGender", @autocomplete = "off" })
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Member Cat</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("MemberTypeId", new SelectList(Model.MemberTypeViewModels, "MemberTypeId", "Name"), "Please Select A Member Cat", new { @class = "custom-select", @id = "ddlMemberCat", @autocomplete = "off" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.EmailAddress, new { @id = "txtEmail", @class = "form-control", @placeholder = "Email" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Membership Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.ClubMemberId, new { @id = "txtMemberShipId", @class = "form-control", @placeholder = "Membership Number" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+
+                                <button type="submit" class="btn btn-info" onclick="GetGolferByAdvanceSearch()"> <i class="fa fa-check"></i> Search </button>
+                                <div id="divMessage"></div>
+                                <div id="divLoader" style="display:none">
+                                    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Column -->
+
+
+
+
+}
+<span id="divSearchGolferTable"></span>
+
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divGolferPopUp"></div>
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.js"></script>
+    <script src="~/Scripts/Custom/SearchGolferController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "Select a Tax",
+
+
+            });
+            OnSearchGolferReady();
+        });
+    </script>
+}
+
+
+

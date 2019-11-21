@@ -1,0 +1,30 @@
+﻿@model List<GolfCentraAdmin.ViewModel.TaxManagementViewModel>
+<div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+    <table class="table" style="width:80%">
+        <thead>
+            <tr>
+                <th width="250px"> Tax ID</th>
+                <th width="200px"> Tax Name</th>
+                <th width="200px">Percentage</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="javascript:void(0)">@item.TaxId</a></td>
+                    <td>@item.Name</td>
+                    <td>@item.Percentage</td>
+                    <td class="text-center">
+                        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.TaxId', '@item.Name','@item.Percentage')"><div class="label label-table label-success">Edit</div></a>
+                        <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.TaxId)"><div class="label label-table label-success">Delete</div></a>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

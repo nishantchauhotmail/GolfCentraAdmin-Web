@@ -1,0 +1,30 @@
+﻿@model List<GolfCentraAdmin.ViewModel.SessionMasterViewModel>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Session ID</th>
+            <th>Session Name</th>
+            <th>Booking Type</th>
+            <th>Active</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+        <tr>
+            <td><a href="javascript:void(0)">@item.SessionId</a></td>
+            <td>@item.SessionName ( @item.StartTime - @item.EndTime )</td>
+            <td>@item.BookingTypeName</td>
+            <td>
+                <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateSessionPopUp('@item.SessionId','@item.StartTime','@item.EndTime','@item.SessionName')"><div class="label label-table label-success">Edit</div></a>
+
+            </td>
+            <td>
+                <a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.SessionId)"><div class="label label-table label-success">Delete</div></a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>

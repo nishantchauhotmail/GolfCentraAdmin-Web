@@ -1,0 +1,104 @@
+﻿@model List<GolfCentraAdmin.ViewModel.EquipmentViewModel>
+<div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+    <table class="table" style="width:80%">
+        <thead>
+            <tr>
+                <th width="250px">Equipment ID</th>
+                <th width="200px">Equipment Name</th>
+                <th width="200px">Price</th>
+                <th>Tax Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="javascript:void(0)">@item.EquipmentId</a></td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#eq@(item.EquipmentId)"><div class="label label-table label-success">Tax Details</div></a>
+                        <div class="modal fade " tabindex="-1" id="eq@(item.EquipmentId)" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content popup_adj">
+                                    <div class="modal-header" style="padding-bottom:35px">
+                                        <h4 class="modal-title" id="myLargeModalLabel">Tax Information</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <div class="card card-body">
+                                                    <div class="table-responsive" style="overflow-x:auto; width:100%; height:350px">
+                                                        @if (item.EquipmentTaxMappingViewModels!= null)
+                                                        {
+                                                            if (item.EquipmentTaxMappingViewModels.Count() != 0)
+                                                            {
+                                                                <table class="table" style="width:80%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                             <th width="200px">Tax Name</th>
+                                                                            <th width="200px">Tax Percentage</th>
+                                                                            <th></th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (var item1 in item.EquipmentTaxMappingViewModels)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@item1.TaxName</td>
+                                                                                <td>@item1.TaxPercentage</td>
+
+                                                                            </tr>
+                                                                        }
+
+                                                                    </tbody>
+                                                                </table>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div> No Record Exist</div>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <div> No Record Exist</div>
+                                                        }
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+
+                        </div>
+
+                    </td>
+                    <td class="text-center">
+                        @{ var ints = item.Taxs;
+                            var stringsArray = ints.Select(i => i.ToString()).ToArray();
+                            var values = string.Join(",", stringsArray);}
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="UpdateUserPopUp('@item.EquipmentId','@values','@item.Price','@item.Description','@item.Name','@item.TaxManagementViewModels')"><div class="label label-table label-success">Edit</div></a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="DeleteUserPopUp(@item.EquipmentId)"><div class="label label-table label-success">Delete</div></a>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

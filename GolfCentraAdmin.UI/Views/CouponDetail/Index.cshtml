@@ -1,0 +1,90 @@
+﻿@model GolfCentraAdmin.ViewModel.CouponViewModel
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Coupon Information</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnCouponAddBegin", OnSuccess = "OnCouponAddSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "CouponDetail/SaveCoupon" }))
+{
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card card-body">
+
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Coupon Name</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Name, new { @id = "txtName", @autocomplete = "off", @class = "form-control", @placeholder = "Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Coupon Code</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Code, new { @id = "txtCode", @autocomplete = "off", @class = "form-control", @placeholder = "Coupon Code" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Amount Or Percentage</label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => x.Amount, new { @id = "txtAmount", @autocomplete = "off", @class = "form-control", @placeholder = "Amount Or Percentage", onkeypress = "return isDecimal(this,event)" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Coupon Type</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("CouponTypeId", new[]{
+                            new SelectListItem(){ Text = "Flat", Value = "1"},
+                            new SelectListItem(){ Text = "Percentage", Value = "2"},
+                           }, new { @class = "form-control custom-select", @id = "ddlCouponType", @autocomplete = "off" })
+
+                            </div>
+                        </div>
+                    <div class="form-group m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit" class="btn btn-info waves-effect waves-light m-t-10" id="btnSubmit">Submit</button>
+                            <div id="divMessage"></div>
+                            <div id="divLoader" style="display:none">
+                                <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+    <div class="row" id="divCouponDetailTable">
+        <!-- Column -->
+        <!-- Column -->
+
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divCouponPopUp"></div>
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<!-- ============================================================== -->
+
+@section scripts{
+    <script src="~/Scripts/Custom/CouponDetailController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnCouponDetailsReady();
+        });
+    </script>
+}

@@ -1,0 +1,30 @@
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csprojAssemblyReference.cache
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csproj.CoreCompileInputs.cache
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Golf Centra\GolfCentra Admin\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csprojAssemblyReference.cache
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csproj.CoreCompileInputs.cache
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\Lotus Lake\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csproj.CoreCompileInputs.cache
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\Emeralda\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csprojAssemblyReference.cache
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csprojAssemblyReference.cache
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csproj.CoreCompileInputs.cache
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\FeatureV1.0\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\bin\Debug\GolfCentraAdmin.ViewModel.pdb
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csprojAssemblyReference.cache
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.csproj.CoreCompileInputs.cache
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.dll
+H:\Main Project\ClassicGolfClub(ITC)\GolfCentraAdmin\GolfCentraAdmin.ViewModel\obj\Debug\GolfCentraAdmin.ViewModel.pdb

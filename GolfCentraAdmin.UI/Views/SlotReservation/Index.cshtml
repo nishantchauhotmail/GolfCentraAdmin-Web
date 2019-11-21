@@ -1,0 +1,196 @@
+﻿
+@model GolfCentraAdmin.ViewModel.BlockSlotRangeViewModel
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" rel="stylesheet" /> <!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Block Slot Range</h3>
+
+    </div>
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Projects of the Month -->
+<!-- ============================================================== -->
+@using (Ajax.BeginForm(new AjaxOptions { OnBegin = "OnBlockSlotRangeAddBegin", OnSuccess = "OnBlockSlotRangeAddSuccess", Url = @GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrl + "SlotReservation/SaveBlockSlotRangeDetail" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <!-- Column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-body">
+
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Start Date<span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.StartDate, new { @id = "txtStartDate", @class = "form-control", @placeholder = "StartDate", @type = "date", @onchange = "OnDateChange()" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">End Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.EndDate, new { @id = "txtEndDate", @class = "form-control", @placeholder = "EndDate", @type = "date", @onchange = "OnDateChange()" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Reason</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(x => x.SlotBlockReason, new { @id = "txtReason", @class = "form-control", @placeholder = "Reason"})
+
+                                    
+                                 @*   @Html.DropDownList("SlotBlockReasonId", new SelectList(Model.SlotBlockReasonViewModels, "SlotBlockReasonId", "Value"), new { @class = "custom-select", @id = "ddlReasonId", @autocomplete = "off" })*@
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Course</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("CoursePairingIds", new SelectList(Model.CoursePairingViewModels, "CoursePairingId", "Value"), new { @class = "custom-select select2", @id = "ddlCourseNameId", @autocomplete = "off" })
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Customer Available  <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("IsCustomerAvailable", new SelectList(new List<bool>() { true, false }), new { @class = "custom-select", @id = "ddlCustomer", @autocomplete = "off" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Booking Available<span style="color:red">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("IsBookingavailable", new SelectList(new List<bool>() {true, false }), new { @class = "custom-select", @id = "ddlBooking", @autocomplete = "off" })
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row p-t-20">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Block Slot</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DropDownList("DisabledSlot", new SelectList(""), new { @class = "custom-select select2", @id = "ddlSlot", @autocomplete = "off" })
+                                    <input type="checkbox" id="checkbox">Select All
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="CouponCode" class="control-label col-form-label" style="font-weight:600">Already Blocked Slot</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                  @*  @Html.DropDownList("AlreadyDisabledSlot", new SelectList(""), new { @class = "custom-select select2", @id = "ddlAlreadyBlocked", @autocomplete = "off" })*@
+                                    <textarea rows="4" id="txtADS" cols="50"class="form-control" placeholder="Already Blocked Slot" disabled></textarea>
+
+                                  @*  <input type="text" id="txtADS" class="form-control" placeholder="Already Blocked Slot" disabled>*@
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+
+                                <button type="submit" class="btn btn-info"> <i class="fa fa-check"></i>  Submit</button>
+                                <div id="divMessage"></div>
+                                <div id="divLoader" style="display:none">
+                                    <img src="@GolfCentraAdmin.UI.Common.Constants.Url.WebSiteUrlWithoutSlash/Theme/images/loader.svg" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <span id="divBlockSlotRangeTable"></span>
+
+                    </div>
+                </div>
+                <!-- Column -->
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<!-- ============================================================== -->
+<!-- End Projects of the Month -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;" id="divBlockSlotPopUp"></div>
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.js"></script>
+    <script src="~/Scripts/Custom/SlotReservationController.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".select2").select2({ "multiple": true });
+
+            txtStartDate.min = new Date().toISOString().split("T")[0];
+            txtEndDate.min = new Date().toISOString().split("T")[0];
+            OnSlotReservationReady();
+
+            $("#checkbox").click(function () {
+                if ($("#checkbox").is(':checked')) {
+                    $("#ddlSlot > option").prop("selected", "selected");
+                    $("#ddlSlot").trigger("change");
+                } else {
+                    $("#ddlSlot > option").prop("selected", "");
+                    //$("#ddlSlot > option").removeAttr("selected");
+                    $("#ddlSlot").trigger("change");
+                }
+            });
+        });
+    </script>
+}
+
+

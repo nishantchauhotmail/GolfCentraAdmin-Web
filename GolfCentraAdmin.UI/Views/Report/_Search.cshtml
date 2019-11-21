@@ -1,0 +1,54 @@
+﻿@model List<GolfCentraAdmin.ViewModel.BookingViewModel>
+<div class="table-responsive" style="overflow-x:auto; width:100%; height:450px">
+    <table id="myTable" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User Name</th>
+                <th>Booking Date</th>
+                <th>Holes</th>
+                <th>Tee Off Date</th>
+                <th>Time</th>
+                <th>Booking Status</th>
+                <th>No. of Player</th>
+                <th>Cart Fee</th>
+                <th>Caddie Fee</th>
+                <th>Green Fee</th>
+                <th>Range Fee</th>
+                <th>No.of Balls</th>
+                <th>Ball Fee</th>
+                <th>Discount</th>
+                <th>Amount</th>
+                <th>On Spot</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>@item.BookingId</td>
+                <td>@item.UserName</td>
+                <td>@item.BookingDate.ToShortDateString() </td>
+                <td>@item.NoOfHole</td>
+                <td>@item.TeeOffDate</td>
+                <td>@item.Time</td>
+                <td>@item.BookingStatus</td>
+                 <td>@item.NoOfPlayer</td>
+                <td>@item.CartFee</td>
+                <td>@item.CaddieFee</td>
+                <td>@item.GreenFee</td>
+                <td>@item.RangeFee</td>
+                <td>@item.NoOfBalls</td>
+                <td>@item.BallFee</td>
+                <td>@item.Discount</td>
+                <td>@item.CurrencyName.@item.TotalAmount</td>
+                <td>@item.OnSpot</td>
+                <td>
+                    <a href="#bookingPopUp" data-toggle="modal" data-target="#bookingPopUp" onclick="GetBookingDetailsById(@item.BookingId)"><div class="label label-table label-success">View</div></a>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

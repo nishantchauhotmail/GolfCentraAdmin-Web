@@ -1,0 +1,31 @@
+﻿@model List<GolfCentraAdmin.ViewModel.BookingViewModel>
+<table id="myTable" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>UserName</th>
+            <th>Booking Date</th>
+            <th>Holes</th>
+            <th>TeeOff Date</th>
+            <th>Time</th>
+            <th>Booking Status</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.BookingId</td>
+            <td>@item.UserName</td>
+            <td>@item.BookingDate</td>
+            <td>@item.NoOfHole</td>
+            <td>@item.TeeOffDate</td>
+            <td>@item.Time</td>
+            <td>@item.BookingStatus</td>
+            <td><a href="" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="GetBookingDetailsById(@item.BookingId)">View</a></td>
+        </tr>
+        }
+ 
+    </tbody>
+</table>
